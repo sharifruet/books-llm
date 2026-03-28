@@ -2,6 +2,8 @@
 
 *Intermediate practice with large language models — Volume II*
 
+*Sharif Uddin*
+
 ## Audience
 
 **Developers, analysts, product managers, and technical writers** who already use LLMs in daily work and want **clearer mental models**, **repeatable workflows**, and **enough depth to ship** features—not just one-off prompts—without yet diving into research-scale training or frontier theory (that is Volume III). You should be comfortable with *From Tokens to Understanding* (Volume I) or equivalent: tokens, context windows, basic prompting, and honest limits of the technology.

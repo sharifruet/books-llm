@@ -1,5 +1,7 @@
 # Part II — How it works (without equations)
 
+*Sharif Uddin*
+
 *[From Tokens to Understanding](from-tokens-to-understanding.md) · Volume I*
 
 ---

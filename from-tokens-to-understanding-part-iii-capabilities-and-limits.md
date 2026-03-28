@@ -1,5 +1,7 @@
 # Part III — Capabilities and limits
 
+*Sharif Uddin*
+
 *[From Tokens to Understanding](from-tokens-to-understanding.md) · Volume I*
 
 ---

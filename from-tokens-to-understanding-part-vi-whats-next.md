@@ -1,5 +1,7 @@
 # Part VI — What’s next
 
+*Sharif Uddin*
+
 *[From Tokens to Understanding](from-tokens-to-understanding.md) · Volume I*
 
 ---

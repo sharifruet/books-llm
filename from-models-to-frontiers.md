@@ -2,6 +2,8 @@
 
 *Advanced topics in large language modeling — Volume III*
 
+*Sharif Uddin*
+
 ## Audience
 
 Researchers, senior engineers, and technical leads who already build or critically evaluate LLM-based systems and want depth on **scaling**, **theory**, **alignment and safety**, **efficiency**, and **emerging paradigms** (multimodal models, agents, and open research questions). Readers should be comfortable with the vocabulary and day-to-day practice covered in *From Prompts to Systems* (Volume II); this volume assumes you can read papers and implementation-oriented documentation without needing every acronym explained from scratch.

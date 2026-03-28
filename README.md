@@ -1,5 +1,7 @@
 # LLM Books
 
+**Author:** Sharif Uddin
+
 This project is a **three-volume series** on **large language models (LLMs)**. Each book has its own title and Markdown file so outlines, drafts, and references can evolve independently.
 
 ## The series

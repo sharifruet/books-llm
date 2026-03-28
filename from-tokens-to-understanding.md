@@ -2,6 +2,8 @@
 
 *An introduction to large language models — Volume I (Basic)*
 
+*Sharif Uddin*
+
 ## Audience
 
 **Curious readers, students, and professionals** who want **plain-language explanations**, **minimal math**, and enough orientation to use LLMs **confidently and responsibly**—without assuming prior machine-learning coursework. If you can read a short article online and follow step-by-step examples in a chat interface, you have enough background to start here. This volume prepares you for *From Prompts to Systems* (Volume II), which assumes the vocabulary and habits you build in these pages.
