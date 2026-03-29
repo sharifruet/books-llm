@@ -34,108 +34,101 @@ Use the outline as a **manuscript contract**: merge or split chapters as your te
 
 ## Detailed outline
 
+Each link below opens a **draft part**—introduction, contents table, full chapter prose, and chapter takeaways—not only a bullet outline.
+
 ### Part I — Mental models and the model lifecycle
 
-1. **From playground to product**  
-   - What changes when a demo becomes a feature: latency, cost, versioning, ownership.  
-   - The stack: model provider, orchestration, application UI, data stores.
-
-2. **How training, instruction tuning, and “the base model” relate**  
-   - Pretraining vs. instruction-tuning vs. preference tuning—intuition only, enough to read model cards.  
-   - Why “smarter” and “more aligned” are different axes.
-
-3. **Choosing a model and reading model cards**  
-   - Context length, modalities, license, and deployment constraints.  
-   - Open vs. closed weights; what you can and cannot assume.
-
-4. **Context windows, memory, and state**  
-   - What fits in context; summarization and truncation as design problems.  
-   - Session state vs. retrieval vs. fine-tuning—preview of later parts.
+→ [from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md](from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md)
 
 ### Part II — Prompting as engineering
 
-5. **Prompt structure and patterns**  
-   - System vs. user vs. tool messages; role and format conventions.  
-   - Few-shot examples, chain-of-thought when to use it, and when it hurts.
-
-6. **Iteration and prompt libraries**  
-   - Versioning prompts like code; A/B and offline comparison.  
-   - Templates, variables, and guardrails in prompt design.
-
-7. **Failure modes and debugging**  
-   - Hallucination, sycophancy, formatting errors, inconsistent tool use.  
-   - Techniques: decomposition, self-check, constraining output shape (JSON, schemas).
-
-8. **Interaction and UX for LLM features**  
-   - Streaming, partial results, undo, and setting user expectations.  
-   - Writing and technical communication with LLM assistance—team norms.
+→ [from-prompts-to-systems-part-ii-prompting-as-engineering.md](from-prompts-to-systems-part-ii-prompting-as-engineering.md)
 
 ### Part III — Data, retrieval, and adaptation
 
-9. **When to retrieve vs. prompt vs. fine-tune**  
-   - Decision flow: freshness, privacy, cost, latency.  
-   - High-level picture of supervised fine-tuning and preference tuning (details deferred to Volume III where needed).
-
-10. **Retrieval-augmented generation (RAG)**  
-    - Chunking, embeddings, vector stores—conceptual and practical.  
-    - Grounding, citation, and handling “not in the corpus.”
-
-11. **Curating and labeling data for adaptation**  
-    - Example formats; quality over quantity; avoiding feedback loops.  
-    - Synthetic data: benefits and risks.
-
-12. **Tools and function calling**  
-    - Designing safe, bounded tools; error handling and retries.  
-    - Orchestration patterns (single model vs. router vs. small pipelines).
+→ [from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md](from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md)
 
 ### Part IV — Evaluation, quality, and safety in practice
 
-13. **What to measure**  
-    - Task accuracy, helpfulness, latency, cost per successful outcome.  
-    - Human eval vs. model-as-judge vs. automatic metrics—tradeoffs.
-
-14. **Test sets, regression testing, and CI for LLM features**  
-    - Golden sets; snapshotting behavior across model upgrades.  
-    - Breaking changes when the provider updates a model.
-
-15. **Safety and abuse in product context**  
-    - Policy layers, blocklists, classifiers, and escalation.  
-    - PII, confidentiality, and data retention choices.
+→ [from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md](from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md)
 
 ### Part V — Systems: APIs, deployment, and operations
 
-16. **API design and abstraction layers**  
-    - Wrapping providers; timeouts, retries, idempotency, streaming.  
-    - Structured outputs and parsing robustness.
-
-17. **Observability and logging**  
-    - What to log (and what not to); tracing multi-step flows.  
-    - Dashboards for quality and cost.
-
-18. **Cost, capacity, and rate limits**  
-    - Token accounting; caching; batch vs. interactive.  
-    - Right-sizing model choice for each subtask.
-
-19. **Security basics for LLM applications**  
-    - Prompt injection overview; trust boundaries for tools and retrieval.  
-    - Sandboxing and least privilege for automated actions.
+→ [from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md)
 
 ### Part VI — Teams, ethics, and the path forward
 
-20. **Working in cross-functional teams**  
-    - Roles: ML, backend, design, legal; review checkpoints.  
-    - Documentation and handoff for LLM features.
-
-21. **Responsible deployment (intermediate stance)**  
-    - Transparency, user control, and proportionality—without duplicating Volume III’s depth.  
-    - When to escalate to safety specialists or policy review.
-
-22. **Bridge to *From Models to Frontiers***  
-    - What Volume III adds: scaling, alignment science, efficiency, frontier research.  
-    - Suggested reading order and skills to sharpen next.
+→ [from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md](from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md)
 
 ---
 
 ## Notes
 
-_Add chapter notes, exercises, vendor-specific appendices, and references here as the manuscript grows._
+This section collects **optional material** for Volume II: sample prompts, a reading list, a **glossary export**, an **exercise index**, optional **figures**, and accessibility notes. It does not replace the parts.
+
+### Accessibility
+
+Part files use **tables** for “Contents of this part.” Each part also includes a **plain list** mirroring the table for readers or tools that do not render tables well.
+
+### Exercise index (*Try it* sections)
+
+| Part | File | Rough focus |
+|------|------|-------------|
+| I | [part-i](from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md) | Playground vs product; read a model card |
+| II | [part-ii](from-prompts-to-systems-part-ii-prompting-as-engineering.md) | Prompt template; debug one failure |
+| III | [part-iii](from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md) | RAG vs prompt decision; tool contract |
+| IV | [part-iv](from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md) | Define one metric; golden test idea |
+| V | [part-v](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) | Sketch an API envelope; what to log |
+| VI | [part-vi](from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md) | RACI snippet; Volume III preview |
+
+**Exercise index (plain list):** Part I — product vs demo, model card · Part II — template + debug · Part III — RAG vs prompt, tools · Part IV — metric, golden tests · Part V — API, observability · Part VI — team handoff, frontier preview.
+
+### Sample prompts (for APIs and eval)
+
+1. **System prompt skeleton.** “You are [role]. Reply in [format]. If unsure, say what is missing. Never invent [constraint].”
+
+2. **Eval rubric.** “Score the assistant answer 1–5 on correctness, helpfulness, and safety. Give one sentence of justification each.”
+
+3. **RAG grounding.** “Using only the provided CONTEXT blocks, answer the question. If CONTEXT is insufficient, say so.”
+
+4. **Regression check.** “Given INPUT and EXPECTED_SHAPE, does OUTPUT parse as valid JSON with keys […]?”
+
+### Glossary export (Volume II core)
+
+- **RAG (retrieval-augmented generation)** — Fetching relevant documents (or chunks) into **context** before generation, so answers can **ground** in supplied text.  
+- **Golden set** — A fixed **evaluation** set of inputs (and often reference outputs) used to detect **regressions** when models or prompts change.  
+- **Model card** — A structured description of a model’s **intent**, **data**, **limitations**, and **evaluation**—read before you commit.  
+- **Tool / function calling** — The model emits **structured calls** (e.g. JSON) to bounded functions your app implements; not arbitrary code execution.  
+- **Prompt injection** — User or untrusted content that **manipulates** the model into bypassing instructions or **misusing** tools—**trust boundaries** matter.
+
+### Reading list (short)
+
+- Provider **API documentation** and **safety** guides for the stack you ship.  
+- Papers or posts on **RAG** architecture and **eval harnesses** once you need depth—*From Models to Frontiers* points to research-scale material.  
+- *From Tokens to Understanding* (Volume I) for vocabulary; [*From Models to Frontiers*](from-models-to-frontiers.md) (Volume III) for training, scale, and frontier topics.
+
+### Optional figures (Mermaid — for HTML/PDF)
+
+**Stack: app → orchestration → model**
+
+```mermaid
+flowchart TB
+  UI[Application / UI] --> ORCH[Orchestration]
+  ORCH --> API[Model API]
+  ORCH --> RET[Retrieval / tools]
+  RET --> STORE[(Data stores)]
+```
+
+**Eval loop**
+
+```mermaid
+flowchart LR
+  P[Prompt + model] --> O[Output]
+  O --> M{Metrics / human review}
+  M -->|fail| P
+  M -->|pass| Ship[Ship / monitor]
+```
+
+### Chapter notes
+
+_Add your own manuscript notes, ticket links, and per-environment quirks below._
