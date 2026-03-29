@@ -99,8 +99,8 @@ If you have worked through Parts I–VI, you have a **grounded** picture: what L
 
 1. **Glossary flashcards.** On paper or in a note file, write the five terms from Chapter 1 (**token**, **context**, **prompt**, **hallucination**, **fine-tuning**) **without** peeking—then open the chapter and fix any gaps.
 
-2. **Volume II preview.** Skim the **introduction** of [From Prompts to Systems](from-prompts-to-systems.md). Write **one** topic from Volume II you want next (e.g. evaluation, APIs, RAG) and **one** skill you might practice (e.g. read a JSON example).
+2. **Volume II preview.** Skim the **introduction** of [From Prompts to Systems](../from-prompts-to-systems/from-prompts-to-systems.md). Write **one** topic from Volume II you want next (e.g. evaluation, APIs, RAG) and **one** skill you might practice (e.g. read a JSON example).
 
 ---
 
-*End of Volume I — From Tokens to Understanding. Previous: [Part V — Responsibility in everyday use](from-tokens-to-understanding-part-v-responsibility-in-everyday-use.md) · Next: [From Prompts to Systems](from-prompts-to-systems.md) (Volume II) · Or [main volume](from-tokens-to-understanding.md).*
+*End of Volume I — From Tokens to Understanding. Previous: [Part V — Responsibility in everyday use](from-tokens-to-understanding-part-v-responsibility-in-everyday-use.md) · Next: [From Prompts to Systems](../from-prompts-to-systems/from-prompts-to-systems.md) (Volume II) · Or [main volume](from-tokens-to-understanding.md).*

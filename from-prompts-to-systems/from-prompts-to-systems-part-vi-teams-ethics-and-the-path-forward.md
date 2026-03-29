@@ -70,8 +70,8 @@ Volume III, *From Models to Frontiers*, is for **depth**: **scaling laws**, **tr
 
 1. **RACI-style.** For one LLM feature, name **who** is accountable for: **model choice**, **prompt changes**, **customer comms** if something goes wrong.
 
-2. **Volume III preview.** Open [From Models to Frontiers](from-models-to-frontiers.md); read the **introduction** outline. **One** topic you want to learn next—write it down.
+2. **Volume III preview.** Open [From Models to Frontiers](../from-models-to-frontiers/from-models-to-frontiers.md); read the **introduction** outline. **One** topic you want to learn next—write it down.
 
 ---
 
-*End of Part VI — Volume II. Previous: [Part V — Systems: APIs, deployment, and operations](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) · Next: [From Models to Frontiers — Volume III](from-models-to-frontiers.md) · Or [main volume](from-prompts-to-systems.md).*
+*End of Part VI — Volume II. Previous: [Part V — Systems: APIs, deployment, and operations](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) · Next: [From Models to Frontiers — Volume III](../from-models-to-frontiers/from-models-to-frontiers.md) · Or [main volume](from-prompts-to-systems.md).*

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build a single PDF for Volume II (*From Prompts to Systems*).
+"""Build a single PDF for Volume III (*From Models to Frontiers*).
 
 Usage (from repo root):
 
-  python3 scripts/build-volume2-pdf.py
+  python3 scripts/build-volume3-pdf.py
 
 Requires: **pandoc** and **Google Chrome** (see scripts/render_pdf.py).
 Reuses `combine_hub_and_parts` from scripts/build-volume1-pdf.py.
@@ -17,12 +17,11 @@ import sys
 from pathlib import Path
 
 PART_FILES = [
-    "from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md",
-    "from-prompts-to-systems-part-ii-prompting-as-engineering.md",
-    "from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md",
-    "from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md",
-    "from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md",
-    "from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md",
+    "from-models-to-frontiers-part-i-scale-data-and-the-pretraining-stack.md",
+    "from-models-to-frontiers-part-ii-alignment-safety-and-robustness.md",
+    "from-models-to-frontiers-part-iii-efficiency-training-inference-and-systems.md",
+    "from-models-to-frontiers-part-iv-beyond-text-multimodal-models-and-agents.md",
+    "from-models-to-frontiers-part-v-frontiers-and-open-problems.md",
 ]
 
 
@@ -43,12 +42,12 @@ def main() -> int:
     ap.add_argument(
         "--input",
         type=Path,
-        default=root / "build" / "from-prompts-to-systems-print.md",
+        default=root / "build" / "from-models-to-frontiers-print.md",
     )
     ap.add_argument(
         "--output",
         type=Path,
-        default=root / "build" / "from-prompts-to-systems.pdf",
+        default=root / "build" / "from-models-to-frontiers.pdf",
     )
     ap.add_argument("--combine", action="store_true", default=True)
     ap.add_argument("--no-combine", action="store_false", dest="combine")
@@ -56,10 +55,10 @@ def main() -> int:
 
     if args.combine:
         combined = v1.combine_hub_and_parts(
-            root / "from-prompts-to-systems",
-            "from-prompts-to-systems.md",
+            root / "from-models-to-frontiers",
+            "from-models-to-frontiers.md",
             PART_FILES,
-            "\n## Full text — Parts I through VI\n\n",
+            "\n## Full text — Parts I through V\n\n",
         )
         args.input.parent.mkdir(parents=True, exist_ok=True)
         args.input.write_text(combined, encoding="utf-8")
@@ -74,7 +73,7 @@ def main() -> int:
         v1.render_markdown_to_pdf(
             md_path=args.input,
             pdf_path=args.output,
-            title="From Prompts to Systems — Volume II",
+            title="From Models to Frontiers — Volume III",
             repo_root=root,
         )
     except Exception as e:

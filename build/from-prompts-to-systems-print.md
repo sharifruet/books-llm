@@ -141,7 +141,7 @@ Long chats and documents exceed **context**. Strategies: **truncate** old turns,
 
 ---
 
-*End of Part I. Previous: [From Tokens to Understanding — Volume I](from-tokens-to-understanding.md) · Next: [Part II — Prompting as engineering](from-prompts-to-systems-part-ii-prompting-as-engineering.md) · Or [main volume](from-prompts-to-systems.md).*
+*End of Part I. Previous: [From Tokens to Understanding — Volume I](../from-tokens-to-understanding/from-tokens-to-understanding.md) · Next: [Part II — Prompting as engineering](from-prompts-to-systems-part-ii-prompting-as-engineering.md) · Or [main volume](from-prompts-to-systems.md).*
 
 
 ---
@@ -578,11 +578,11 @@ Volume III, *From Models to Frontiers*, is for **depth**: **scaling laws**, **tr
 
 1. **RACI-style.** For one LLM feature, name **who** is accountable for: **model choice**, **prompt changes**, **customer comms** if something goes wrong.
 
-2. **Volume III preview.** Open [From Models to Frontiers](from-models-to-frontiers.md); read the **introduction** outline. **One** topic you want to learn next—write it down.
+2. **Volume III preview.** Open [From Models to Frontiers](../from-models-to-frontiers/from-models-to-frontiers.md); read the **introduction** outline. **One** topic you want to learn next—write it down.
 
 ---
 
-*End of Part VI — Volume II. Previous: [Part V — Systems: APIs, deployment, and operations](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) · Next: [From Models to Frontiers — Volume III](from-models-to-frontiers.md) · Or [main volume](from-prompts-to-systems.md).*
+*End of Part VI — Volume II. Previous: [Part V — Systems: APIs, deployment, and operations](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) · Next: [From Models to Frontiers — Volume III](../from-models-to-frontiers/from-models-to-frontiers.md) · Or [main volume](from-prompts-to-systems.md).*
 
 
 ---
@@ -630,7 +630,7 @@ Part files use **tables** for “Contents of this part.” Each part also includ
 
 - Provider **API documentation** and **safety** guides for the stack you ship.  
 - Papers or posts on **RAG** architecture and **eval harnesses** once you need depth—*From Models to Frontiers* points to research-scale material.  
-- *From Tokens to Understanding* (Volume I) for vocabulary; [*From Models to Frontiers*](from-models-to-frontiers.md) (Volume III) for training, scale, and frontier topics.
+- *From Tokens to Understanding* (Volume I) for vocabulary; [*From Models to Frontiers*](../from-models-to-frontiers/from-models-to-frontiers.md) (Volume III) for training, scale, and frontier topics.
 
 ### Optional figures (Mermaid — for HTML/PDF)
 

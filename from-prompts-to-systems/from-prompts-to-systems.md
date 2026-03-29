@@ -105,7 +105,7 @@ Part files use **tables** for “Contents of this part.” Each part also includ
 
 - Provider **API documentation** and **safety** guides for the stack you ship.  
 - Papers or posts on **RAG** architecture and **eval harnesses** once you need depth—*From Models to Frontiers* points to research-scale material.  
-- *From Tokens to Understanding* (Volume I) for vocabulary; [*From Models to Frontiers*](from-models-to-frontiers.md) (Volume III) for training, scale, and frontier topics.
+- *From Tokens to Understanding* (Volume I) for vocabulary; [*From Models to Frontiers*](../from-models-to-frontiers/from-models-to-frontiers.md) (Volume III) for training, scale, and frontier topics.
 
 ### Optional figures (Mermaid — for HTML/PDF)
 

@@ -112,7 +112,7 @@ Short definitions aligned with [Part VI — Chapter 1](from-tokens-to-understand
 - Russell & Norvig, *Artificial Intelligence: A Modern Approach* — broad context for “AI” vs narrow tools.  
 - Jurafsky & Martin, *Speech and Language Processing* (relevant chapters) — deeper NLP for readers who want textbooks after Volume I.  
 - Your model provider’s **documentation** and **system card / model card** for the product you actually use—primary for behavior and limits.  
-- Follow-up in this series: [*From Prompts to Systems*](from-prompts-to-systems.md), then [*From Models to Frontiers*](from-models-to-frontiers.md).
+- Follow-up in this series: [*From Prompts to Systems*](../from-prompts-to-systems/from-prompts-to-systems.md), then [*From Models to Frontiers*](../from-models-to-frontiers/from-models-to-frontiers.md).
 
 ### Optional figures (for PDF / HTML builds)
 
