@@ -32,11 +32,15 @@ Part I gave you **orientation**: vocabulary, history, and a clear line between f
 
 ## Chapter 1 — Text as tokens
 
+**Ever opened a bill and wondered how “hello world” became hundreds of units?** On many systems, those units are **tokens**, not words—and the mismatch between human intuition and provider accounting causes real arguments.
+
 Models do not read text the way humans do. They read **tokens**: pieces produced by a fixed procedure called a **tokenizer**. Getting comfortable with tokens saves you from surprises on your bill and from misunderstanding limits in the UI.
 
 ### Words, subwords, and strange splits
 
 In English, a token is sometimes a whole word (`"hello"`), sometimes a fragment (`"ing"`, `"un"`). Rare or long words are often cut into several tokens. Punctuation and spaces usually cost tokens too; a newline may be its own token. Different products may use different tokenizers, so the **same sentence** can tokenize slightly differently across systems.
+
+*Memorable detail:* a long technical identifier like `getUserSessionConfig` might eat **more** tokens than the short sentence “Please log in again”—because the model has seen “please log in” on repeat, but your camelCase string is rare and gets chopped into unfamiliar pieces.
 
 That matters because **price and limits are counted in tokens**, not in words or characters.
 
@@ -58,17 +62,21 @@ So “one prompt” is not one fixed price. A verbose system prompt, a huge past
 
 Think of the tokenizer as a **reversible encoding** of text into a standard alphabet the model knows. It is not compression in the file-size sense, but it is **structured**: the model never sees raw bytes the way your editor does; it sees **IDs** that stand for learned pieces of text.
 
-> **In this chapter.** Tokens are the model’s atoms of text; counts drive cost and limits; rare words may split into many tokens.
+**Where smart people stumble:** they budget for **user question** length and forget the **system prompt**, **tool outputs**, and **prior chat**—then blame “the model” when the window overflows.
 
 ---
 
 ## Chapter 2 — Prediction: the next piece of text
+
+If tokens are the atoms, prediction is the heartbeat: **one beat, one token**, repeat.
 
 At the core of autoregressive language modeling is a simple loop: given everything so far, assign a **probability** to each possible next token, **pick** one (or take the most likely), append it, and repeat. Everything else—chat tone, “reasoning,” code—is built on top of that loop.
 
 ### One step at a time
 
 The model does not emit a full answer in a single gulp. It proposes **one** next token, then conditions the following step on the longer prefix—including the token it just wrote. That is why edits to **early** tokens can change **later** ones: the chain is causal.
+
+*Pause for a one-line analogy:* it is less like printing a finished essay and more like walking a tightrope—each step depends on where your foot just landed.
 
 ### Creativity versus determinism
 
@@ -85,13 +93,13 @@ The model is trained on mountains of text where confident explanations are commo
 
 This is the same **fluency ≠ truth** lesson from Part I, now tied to **mechanics**: there is no step labeled “check against reality” inside the next-token loop.
 
-> **In this chapter.** Generation is repeated next-token prediction with sampling; randomness is controlled, not magical; confidence in tone does not imply correctness.
+**Tradeoff teams ignore at their peril:** they turn **temperature down** to reduce creativity, then interpret the resulting **monotone** confidence as rigor. Statistical flatness is not epistemic humility.
 
 ---
 
 ## Chapter 3 — Training and adaptation in one picture
 
-Commercial assistants are not only “big neural nets trained on the web.” They are usually **pipelines**: one or more stages after the first round of training teach the model to **follow instructions**, **refuse** some requests, and **match** a house style. You only need a **cartoon** of that pipeline to read announcements and model cards.
+*Story first:* a **base** model fresh from pretraining might continue your email like a novel—beautiful prose, wrong recipient. Product teams then run later stages so it behaves like something you can ship. You only need a **cartoon** of that pipeline to read announcements and model cards.
 
 ### Pretraining: learning language from data
 
@@ -115,11 +123,13 @@ You will see names like **RLHF**, **DPO**, **constitutional AI** in blog posts. 
 
 When a provider “updates the model,” behavior can shift because **any** stage changed—not only pretraining.
 
-> **In this chapter.** Pretraining builds broad language skill; later tuning shapes assistant behavior; “base” vs “chat” names real differences in the pipeline.
+**Compact read:** pretraining builds broad language skill; later tuning shapes assistant behavior; “base” vs “chat” names real differences in the pipeline.
 
 ---
 
 ## Chapter 4 — Context windows and memory
+
+**What if your desk only held one sheet of paper—but every time you wrote a new line, the top line could vanish?** That is closer to how chat works than “the AI remembers our whole friendship.”
 
 The model has no invisible notebook. Everything it “knows” during a reply is whatever sits in the **context**: the tokens you send this turn (system prompt, prior turns, retrieved snippets—if the product adds them). That set is **bounded**.
 
@@ -139,15 +149,15 @@ If something important happened twenty turns ago and fell out of the window, the
 
 Longer context is not “free” for providers either: attention over many tokens costs compute. That is why **long-context** features may be priced differently or rolled out gradually.
 
-> **In this chapter.** Context is finite; everything the model sees must fit in the window; long chats and long docs need deliberate strategies, not hope.
+*Takeaway you can use Monday morning:* context is finite; everything the model sees must fit in the window; long chats and long docs need deliberate strategies, not hope.
 
 ---
 
 ## Try it
 
-1. **Token awareness.** Paste a paragraph you wrote (about 100–150 words) into your provider’s **tokenizer** or token counter, if available. Note approximate token count and one word that split into **multiple** tokens.
+1. **Token awareness.** Paste a paragraph you wrote (about 100–150 words) into your provider’s **tokenizer** or token counter, if available. Note approximate token count—and one word that split into **multiple** tokens. If the tool shows per-token IDs, glance once; you are allowed to find that satisfying without understanding the math.
 
-2. **Same prompt, two temperatures.** Ask a short creative question twice; if the UI exposes **temperature** or “more/less creative,” use low vs high. Compare: which answer would you **trust** for a fact, and which for brainstorming?
+2. **Same prompt, two temperatures.** Ask a short creative question twice; if the UI exposes **temperature** or “more/less creative,” use low vs high. Which answer would you **trust** for a fact, and which for brainstorming? If you cannot change temperature, ask the same question in **two separate chats** and compare anyway—sampling noise still teaches you something.
 
 ---
 

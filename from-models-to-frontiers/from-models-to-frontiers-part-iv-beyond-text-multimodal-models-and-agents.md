@@ -36,7 +36,9 @@ Language is not the only **interface** to the world. This part surveys **multimo
 
 **Unified** transformers over **flattened** multimodal token streams vs **modular** encoders feeding **fusion** layers—**tradeoffs** in **data**, **latency**, and **interpretability**. **Evaluation** is harder than text-only: **grounding**, **hallucinated** objects, **fairness** across **modalities**.
 
-> **In this chapter.** Multimodal is **not** text plus a side channel—it changes **errors** and **metrics**.
+*Memorable failure:* the model **describes** confidently what is not in the pixels—text-only QA errors feel quaint by comparison.
+
+**Takeaway:** multimodal is **not** text plus a side channel—it changes **errors** and **metrics**.
 
 ---
 
@@ -44,7 +46,9 @@ Language is not the only **interface** to the world. This part surveys **multimo
 
 Volume II treated **RAG** as engineering. Here the question is when **retrieval** beats long context or fine-tuning for **freshness** and **provenance**, and when **parametric** memory suffices. Grounding in external knowledge needs clear **protocols**—models confabulate citations without tool **discipline**.
 
-> **In this chapter.** Grounding is a **systems** property: **tools**, **retrieval**, and **prompts** together.
+*Friction:* “we added tools” does not fix **trust** if the model can still **sound** grounded when the tool returned **nothing**.
+
+**Summary line:** grounding is a **systems** property: **tools**, **retrieval**, and **prompts** together.
 
 ---
 
@@ -56,15 +60,17 @@ Volume II treated **RAG** as engineering. Here the question is when **retrieval*
 
 Credit assignment over long horizons, safe interruptibility, evaluation of open-ended tasks, and alignment when reward is delayed—all **active research**.
 
-> **In this chapter.** Agents multiply risk and debugging surface—invest in eval harnesses before hype.
+*Direct address:* if your agent demo is **five** steps, production is **five hundred**—the debugging surface scales faster than the slide count.
+
+**Closing thread:** agents multiply risk and debugging surface—invest in eval harnesses before hype.
 
 ---
 
 ## Try it
 
-1. **Multimodal.** Name one evaluation risk specific to vision–language models that does not arise in text-only QA.
+1. **Multimodal.** Name one evaluation risk specific to vision–language models that does not arise in text-only QA. “Hallucination” is too generic—name a **vision-shaped** failure.
 
-2. **Agent.** Describe one failure mode for a tool-using agent and one mitigation (architecture or process).
+2. **Agent.** Describe one failure mode for a tool-using agent and one mitigation (architecture or process). If your mitigation is “more prompting,” try again with **tool policy** or **human gate**.
 
 ---
 

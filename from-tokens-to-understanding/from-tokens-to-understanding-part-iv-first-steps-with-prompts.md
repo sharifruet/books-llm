@@ -48,19 +48,19 @@ When you **can** edit the system message, treat it as the **contract** for the w
 
 Models **drift**: they pick up style from the last few turns, chase tangents, or “helpfully” answer a different question than you asked. **Narrow** the task in one place (system or first user message): audience, length, what *not* to do. If the thread has gone wrong, **open a new chat** rather than fighting ten rounds of repair—often cheaper in time and tokens.
 
+*Friction:* the person who **refuses** to start a new thread because “the model should remember” is fighting the **context window**, not stubbornness. Sometimes a fresh chat is the professional move.
+
 ### Saving and revisiting useful prompts
 
 Good prompts are **assets**. Keep a **personal library**: a note file, a doc, or snippets in a password manager for non-secret templates. Label them by **intent** (“polite decline,” “summarize for executives,” “extract action items”). Revise when a provider **changes models**; behavior shifts with updates.
 
 Version one line of **metadata**: which product, which model name, and the date—future you will thank present you.
 
-> **In this chapter.** Roles structure behavior; system-level instructions matter when exposed; scope and fresh threads beat endless correction; save prompts like reusable tools.
-
 ---
 
 ## Chapter 2 — Writing prompts that work
 
-A prompt is not magic wording—it is **specification**. You get better results when you make the **goal**, **audience**, **format**, and **constraints** explicit. You can also **show** the pattern you want instead of only describing it.
+**What does “better prompt” mean if you never said what “better” looks like?** A prompt is not magic wording—it is **specification**. You get better results when you make the **goal**, **audience**, **format**, and **constraints** explicit. You can also **show** the pattern you want instead of only describing it.
 
 ### Goal and audience first
 
@@ -87,7 +87,7 @@ Keep examples **honest**: do not embed false facts as exemplars unless you are i
 
 If the first answer is wrong in a **fixable** way, edit the prompt: add one constraint, one example, or one negative (“Do not …”). If the task is inherently **open-ended**, expect to **refine** in a few steps—that is normal, not failure.
 
-> **In this chapter.** Specify goal, audience, format, and limits; use short examples when shape matters; improve prompts iteratively like any spec.
+*One-line analogy:* prompting is less like a single court ruling and more like **iterating a spec** with a contractor who cannot read your mind.
 
 ---
 
@@ -119,7 +119,7 @@ Even clear prompts fail. Recognizing **patterns** of failure speeds recovery: yo
 
 For complex work, **sequencing** beats one giant prompt: summarize, then critique, then revise. Ask for an **outline** first when structure matters. *From Prompts to Systems* expands this into workflows and tooling; here, the habit is enough: **decompose**.
 
-> **In this chapter.** Match the fix to the failure—vagueness, length, format, or context limits—and prefer structure and fresh threads over endless repair in one conversation.
+**Quick diagnostic:** if you are on your **fifth** “please follow my rule” message in the same thread, you are often past the point where **prompt tweaks** beat **fresh context**.
 
 ---
 
@@ -143,15 +143,15 @@ If putting text into a chat would **violate policy**, **breach contract**, or **
 
 Sometimes search, spreadsheets, databases, calculators, or a colleague’s judgment are **strictly better**. The model is strong where **language and rough structure** help; it is weak where **truth, privacy, or proof** is non-negotiable.
 
-> **In this chapter.** Saying no is part of skill: skip or constrain LLM use when stakes, secrecy, or correctness demand something other than fluent text.
+*Takeaway:* saying no is part of skill—skip or constrain LLM use when stakes, secrecy, or correctness demand something other than fluent text.
 
 ---
 
 ## Try it
 
-1. **Structured prompt.** Ask for the same small task twice: (A) a vague one-liner, (B) a prompt with **goal, audience, format, and a word limit**. Which output is easier to **use** as-is?
+1. **Structured prompt.** Ask for the same small task twice: (A) a vague one-liner, (B) a prompt with **goal, audience, format, and a word limit**. Which output is easier to **use** as-is? If (A) was “fine,” ask yourself whether you were grading **politeness** instead of **utility**.
 
-2. **One failure mode.** Deliberately use a vague prompt; when the answer is fluffy, **rewrite the prompt once** using one technique from Chapter 3 (narrow goal, outline first, or split steps). Compare.
+2. **One failure mode.** Deliberately use a vague prompt; when the answer is fluffy, **rewrite the prompt once** using one technique from Chapter 3 (narrow goal, outline first, or split steps). Compare. If you enjoy this exercise a little too much, you might be a future prompt engineer—Volume II will feed that habit responsibly.
 
 ---
 

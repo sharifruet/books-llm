@@ -6,7 +6,14 @@
 
 ---
 
-Before you touch a chat window or an API, it helps to know **what you are looking at**. This part sets expectations: how the trilogy is meant to be read, how “AI” and “machine learning” relate to language models, what an LLM actually *is* (and what it only resembles), and how we got from simple word counts to the large models people talk about today. None of that requires equations—only patience and a willingness to separate **fluency** from **truth**.
+This part answers four questions in simple language (no math):
+
+- How should you **use this book**?
+- What do people mean by **AI**, **machine learning**, and **language models**?
+- What is an **LLM**, really—and what is it **not**?
+- How did we get from **simple word statistics** to **today’s large models**?
+
+**One idea to carry through:** good writing from a model can still be **wrong**. You will learn to separate **smooth language** from **true facts**.
 
 ---
 
@@ -32,129 +39,266 @@ Before you touch a chat window or an API, it helps to know **what you are lookin
 
 ## Chapter 1 — How to use this book
 
-This volume is a **map**, not a sprint. It exists to give you a stable picture of what large language models are, what they are good for, and where they fail—so you can use them without treating polished prose as proof.
+### The main idea
 
-### What you will find here
+- You **do not** need to read this book from page 1 to the end in one week.
+- Short sessions work well: read a little, **stop**, try one example (see *Try it* at the end of each part).
+- If you stop for several days, start again from the **contents list** at the top of the part. That list shows where you are in the book.
 
-You get short explanations in plain language; mental models you can reuse when reading the news or a product page; prompts you can try in any major chat assistant; and steady reminders about privacy, bias, and verification. Where a topic really needs a full course—calculus, distributed training, alignment theory—this book **points forward** to *From Prompts to Systems* and *From Models to Frontiers* instead of cramming everything into a single chapter.
+### What this volume gives you
 
-### What you will not find here
+- Clear explanations (as far as possible without jargon walls).
+- Words and pictures you can reuse when you read news or product pages.
+- Example prompts you can type into a chat tool.
+- Regular reminders: privacy, bias, and **checking facts**.
 
-Do not expect step-by-step **training** of a model from scratch; formal **derivations** of loss functions or attention; a **complete architecture survey**; or **vendor-specific** walkthroughs that go stale when a settings screen moves. Those belong in courses, documentation, or the later volumes, depending on depth.
+### What this volume does *not* try to do
 
-### How to read and practice
+- Train a model from zero (that is a different kind of course).
+- Show long math proofs.
+- Track every architecture name in the research world.
+- Depend on one company’s buttons and menus (those change).
 
-Work in **short sessions**: read a section, pause, then try **one** thing—a single prompt, or checking a claim against another source. When the book suggests an exercise, treat it as optional but **useful**; “muscle memory” for how models behave beats skimming.
+Harder topics point to **Volume II** (*From Prompts to Systems*) and **Volume III** (*From Models to Frontiers*).
 
-Keep a **scratch file** (paper or digital) for prompts that worked, terms you looked up, and questions to carry into Volume II. When you pick the book up after a break, skim the **contents** at the start of each part so you remember where you are in the arc: orientation, then mechanics, then responsibility.
+### How to practice
 
-> **In this chapter.** You now know what this volume promises, what it deliberately omits, and a sustainable way to read it.
+1. Read one section.
+2. Do **one** small action: try a prompt, or check one fact on another website.
+3. Keep a **simple note file** (phone, paper, or computer): good prompts, new words, questions for later.
+
+**Summary:** This book is a **map** and a set of **habits**, not a race.
 
 ---
 
 ## Chapter 2 — AI, machine learning, and language models in plain language
 
-Headlines use “AI” to mean many different things. Sorting the vocabulary early saves confusion later.
+### Why vocabulary matters
 
-### Artificial intelligence and machine learning
+The word **“AI”** appears in many headlines. The **same word** can mean different systems:
 
-**Artificial intelligence** is a broad label: systems that do tasks we associate with human judgment—classifying, ranking, generating, planning—often under uncertainty. Not every AI system **learns from data**. A chess engine built from hand-written rules (“if the opponent does X, play Y”) counts as AI in a loose sense, but it does not *learn* from examples the way modern models do.
+| Headline idea | Example of what “AI” might mean |
+|---------------|----------------------------------|
+| Cars | Self-driving experiments |
+| Email | Spam filter |
+| Chat | A large language model (or a product built around one) |
 
-**Machine learning** means adjusting a system using **data** so that its performance on a task improves without someone coding every special case. You supply inputs (and usually desired outputs); the system finds **patterns** that generalize to new inputs. That process is **statistical**: it works when training data resembles what you will see in deployment, and it can fail when the world shifts or the data is skewed or biased.
+If two people use the word “AI” but mean different things, they will talk past each other. The list below fixes that.
 
-### Why language is a different kind of problem
+---
 
-Many tasks attach **one label** to **one object**—for example, an image gets “cat” or “dog.” Language does not work that way. Text unfolds **one piece at a time** in a huge space of possible continuations, and meaning depends on **context**: earlier words in the sentence, the document, or the conversation.
+### Artificial intelligence (AI)
 
-A language model is therefore not merely classifying; it is **modeling a distribution** over sequences—what word or fragment is plausible next, given what came before. That is why **local** coherence can be so strong: the model is very good at continuing in a way that *sounds* right.
+- **Meaning:** A **wide** label for systems that do tasks we often link to people: sorting, ranking, writing, planning, and so on.
+- **Important:** Not every “AI” system **learns from examples**.  
+  - Example: a chess program built only from **hand-written rules** is still called AI in a loose way, but it does **not** learn from data like modern ML.
 
-It does **not** follow that the model has **beliefs**, a **memory of facts**, or **direct access to the world** the way a person does. Those are separate questions, taken up in the next chapter.
+---
 
-### Where LLMs sit among other tools
+### Machine learning (ML)
 
-The same broad ML ideas show up across domains:
+- **Meaning:** The system **learns from data**. Humans do not write a separate rule for every case.
+- You give **examples** (inputs, and usually correct outputs). The system looks for **patterns** that work on **new** inputs.
+- It is **statistical**: it works best when future data looks like training data. It can fail when the world changes or the data is unfair or one-sided.
 
-- **Vision** models map images or video to labels, boxes, or captions.  
-- **Speech** systems map audio to text, or text to speech.  
-- **Robotics** often combines perception, planning, and control.
+**Simple picture — data in, patterns out:**
 
-A **large language model** focuses on **text** (and in multimodal systems, text *together with* other inputs—but this volume starts from the text core). When headlines say “AI” in **recent years**, they often mean an LLM, or a product that **wraps** an LLM with search, tools, or other components. Keeping those layers distinct saves you from expecting one stack to solve every problem.
+```mermaid
+flowchart LR
+  A[Examples / data] --> B[Learning step]
+  B --> C[Patterns for new inputs]
+```
 
-> **In this chapter.** AI is a wide umbrella; machine learning learns patterns from data; language modeling is sequential and contextual; LLMs are one powerful species in a larger zoo.
+*Same idea in plain text (works in any viewer):*
+
+```text
+  examples  --->  learning step  --->  patterns for new inputs
+```
+
+---
+
+### Why language is a harder kind of task
+
+Many tasks are **one label for one thing**:
+
+- Photo → “cat” or “dog”.
+
+**Language is not like that.** Text comes **one piece after another**. Meaning depends on **what came before** in the sentence, page, or chat.
+
+So a **language model** is not only picking a single label. It works with **what word or fragment is likely next**, given the text so far. That is why the next words can **sound very natural** even when the content is false (we come back to that in Chapter 3).
+
+---
+
+### Where LLMs sit in the bigger picture
+
+Other machine-learning tools include:
+
+- **Vision:** images or video → labels, boxes, captions.
+- **Speech:** sound → text, or text → sound.
+- **Robotics:** sensing, planning, movement together.
+
+A **large language model (LLM)** focuses on **text**. (Some products add images or sound; this book starts from **text**.)
+
+Often, news “AI” means **an LLM** or a **product** that combines an LLM with search, tools, or other software. Those are **different layers**.
+
+**Short recap:**
+
+- **AI** = broad name for many kinds of systems.
+- **Machine learning** = learn patterns from data.
+- **Language model** = deal with **sequences** of text, step by step.
+- **LLM** = a large, modern language model—one important branch of ML, not the whole of “AI.”
 
 ---
 
 ## Chapter 3 — What an LLM is—and what it is not
 
-Once the vocabulary is in place, you can state plainly what “LLM” names—and what it does **not** name.
+### In one sentence
 
-### What the acronym names
+An LLM is software trained to **continue text** in a way that **looks reasonable**. It is **not** the same as a fact database, a person, or the live web—unless extra tools are added on purpose.
 
-In the usual technical sense, a **large language model** is a **learned function** that assigns probabilities to possible next pieces of text (**tokens**), given everything you have fed it so far. **Large** refers to scale—billions of parameters is unremarkable now—which affects capability and cost, but the core idea remains **conditional probability over sequences**.
+---
 
-### What it is
+### What “LLM” names
 
-An LLM is a **statistical model of language**. It absorbs regularities in how people write—grammar, tone, genre, argument shape, code formatting—because it was trained on enormous amounts of text. When you “ask a question,” you supply a **prefix**; the model continues in ways that *look* like plausible answers in that situation. That behavior is useful for drafting, brainstorming, rephrasing, and exploring ideas—when you treat it as assistance, not oracles.
+- **Large:** many internal parameters (we say “large” compared to older, smaller models). Size affects quality and cost.
+- **Language model:** it assigns **chances** to possible next **tokens** (small pieces of text), based on everything you have given it so far.
 
-### What it is not
+So at core it answers: **“What might come next?”**—not **“What is true in the world?”**
 
-**Not a database of facts.** The model does not “look up” your answer in a table of truths. If something *like* lookup happens, it is because a **separate** system—retrieval, tools, browser integration—was added on purpose. Even then, the LLM can misread or blend what it receives.
+---
 
-**Not a person.** It has no life history, no conscience, and no human accountability. Calling it “she,” “he,” or “they” is a metaphor for conversation design, not a claim about inner life.
+### What it *is*
 
-**Not the open web by default.** A standard chat model’s factual picture is **frozen** at training time (with a stated knowledge cutoff) unless the product adds **live** retrieval. Treat “searching the web” as a **feature**, not a property of “being an LLM.”
+- A **statistical** model of language: it picks up patterns from huge amounts of text (grammar, style, tone, code layout, and so on).
+- When you type a question, you are really giving a **starting text**; the model **continues** in a way that looks like a good answer **in form**.
 
-Mixing up these roles—oracle, friend, search engine—invites **over-trust**.
+**Good uses** (with care): drafts, brainstorming, rephrasing, exploring ideas—as **help**, not as a final authority.
 
-### Why fluent text can still be wrong
+---
 
-The model is trained to produce answers that *look like* good answers: clear structure, confident tone, plausible detail. None of that requires the content to be **true**. A false statement can be dressed in the same statistical clothing as a true one.
+### What it is *not* (very common mistakes)
 
-There is no internal guarantee that output matches reality—only that it resembles answers common in training. Later parts of Volume I return to **hallucination**, **verification**, and **when not to use** a model at all.
+| Myth | Simpler truth |
+|------|----------------|
+| “It looks up facts in a table.” | **No.** It does not work like a search engine’s index of verified facts. |
+| “It is like a person inside the computer.” | **No.** It has no life story and no human responsibility. Friendly wording is **design**, not proof of a mind. |
+| “It always knows the latest web news.” | **Not by default.** Training stops at a point in time unless the **product** adds live search or tools. |
 
-> **Remember.** Fluency is a style; truth is a separate question. **Fluency ≠ truth.**
+If the app **can** search the web or call tools, that is an **extra feature**, not something all LLMs do by themselves.
+
+---
+
+### Why pretty text can still be wrong
+
+The training goal is: **produce text that looks like good answers in the training data**. That is **not** the same goal as: **only say true things**.
+
+So you can get:
+
+- clear structure,
+- confident tone,
+- realistic detail,
+
+…even when a **specific fact** is wrong.
+
+**Rule of thumb:**
+
+```text
+Smooth writing  ≠  Guaranteed truth
+```
+
+Later parts of Volume I explain **hallucinations**, **how to check facts**, and **when not to use** a model.
+
+---
+
+### Simple diagram — you, the model, and optional tools
+
+```mermaid
+flowchart TB
+  subgraph user["You"]
+    U[Your question / prompt]
+  end
+  subgraph core["Typical LLM"]
+    M[Predicts likely next text]
+  end
+  subgraph extra["Sometimes added by the product"]
+    S[Web search]
+    T[Tools / APIs]
+    D[Company documents]
+  end
+  U --> M
+  S --> M
+  T --> M
+  D --> M
+  M --> R[Answer you see]
+```
+
+*Same idea in plain text (e.g. for PDF or plain Markdown viewers):*
+
+```text
+  Your prompt  -->  LLM (predicts next text)  -->  Answer you see
+                        ^
+                        |
+            Optional inputs from the product:
+            web search, tools, company documents
+```
 
 ---
 
 ## Chapter 4 — A short history to the present
 
-You do not need to be a historian to use a model today. You *do* need a rough sense of why the last decade felt like a step change—which this chapter supplies in broad strokes, without architecture deep dives.
+You do not need dates and names to use a chat tool. You only need a **rough story**: how we moved from **counting short phrases** to **today’s large neural models**.
 
-### N-grams: statistics over short spans
+---
 
-Before modern deep learning, the simplest language models were **n-grams**: counts of short word sequences in a corpus. If “the cat sat on the” appears constantly, “mat” gets a higher score than “theorem.” That works for spell-checking and crude autocomplete and is easy to reason about.
+### Step 1 — N-grams (old but easy to explain)
 
-N-grams **do not generalize** well. They struggle with rare phrases, with long-distance dependencies (“the scientist … later … proved the conjecture”), and with anything that depends on **meaning** beyond nearby word habits.
+- **Idea:** Count **short chains of words** in a big pile of text.
+- **Example:** After “happy”, “birthday” is very common. After “the cat sat on the”, “mat” is more common than “theorem.”
+- **Good for:** spell-check, very simple suggestion.
+- **Weak point:** hard with rare wording, long-distance connections, or **meaning**—because it mostly sees **local** word habits.
 
-### Neural language models: learned context
+---
 
-**Neural** models replaced giant tables of counts with **learned representations**. Words become vectors in a high-dimensional space; the network learns which contexts cluster together. Similar words **share** statistical support, which helps fluency and rare words.
+### Step 2 — Neural language models
 
-For a long time, though, models were **small** by current standards, and capturing very long structure remained difficult.
+- **Idea:** Instead of only counting, use a **network** that **learns** how words relate in context.
+- **Gain:** similar words can **share** what the model learned; rare words are handled better than with tiny count tables.
+- **Limit:** for a long time models were **small**; long structure in a document was still hard.
 
-### Transformers, attention, and depth
+---
 
-**Transformers** with **attention** made it practical to stack many layers and train on parallel hardware. A usable mental image of attention: when predicting the next token, the model learns **which earlier tokens to weight heavily**. That supports **much longer context**—thousands of tokens in mature systems.
+### Step 3 — Transformers and attention
 
-The exact wiring matters for specialists. For this book, the important part is the **consequence**: researchers could add **data**, **compute**, and **parameters** and often see **smooth gains** in capability—until they hit data, compute, or fundamental limits.
+- **Idea:** When predicting the next token, the model learns **which earlier words matter most** (“attention”).
+- **Gain:** many layers + parallel training → much **longer context** (thousands of tokens in mature products).
+- **Practical note:** more data + more compute + more parameters often brought **steady gains**—until limits hit (data, compute, or the task itself).
 
-### Scale and what changed in practice
+---
 
-As models moved from millions toward **billions** of parameters and trained on large slices of public text, they began to **imitate** not only grammar but **genres**: explanations, code, dialogue, translation. Behaviors that look like “following instructions” or “sketching a proof” emerged **without** hand-written rules for each trick.
+### Step 4 — Scale and what people noticed in daily life
 
-That does **not** mean the system **understands** in a human sense. It means that the training objective, at sufficient scale, encourages **broad statistical mimicry** of human text—including text that *looks* expert.
+- Models grew from **millions** to **billions** of parameters and trained on large text from the web and elsewhere.
+- The output started to **look like** many **genres**: explanations, code, dialogue, translation—even when nobody hand-wrote rules for each style.
 
-The next parts of Volume I leave history behind and turn to **mechanics**: tokens, prediction step-by-step, and context windows—so you can use that mimicry without mistaking it for magic, or for a promise of correctness.
+**This does not prove human-like understanding.** It means: at large scale, the training pushes the system to **imitate** patterns in human text—including text that **looks expert**.
 
-> **In this chapter.** Local word statistics gave way to neural sequences, then to deep attention-based models at scale. Scale unlocked surprising mimicry; it did not quietly solve truth or meaning.
+**One-line summary:**  
+First: local word statistics → then: neural models → then: transformers and scale → **fluent imitation** of many kinds of writing. **Truth and meaning** stay separate problems.
 
 ---
 
 ## Try it
 
-1. **Book vs oracle.** In any chat tool, ask: *Explain in three bullets what this book says an LLM is not (database, person, web search).* Compare the answer to Chapter 3 of this part. Note anything the model **added** that the book did not claim.
+These exercises are short. Use any major chat assistant.
 
-2. **Fluency check.** Ask the model for a **specific fact** you can verify in two minutes (e.g. a date, a citation, a number). Verify it elsewhere. If it was wrong, rewrite one sentence you will remember: what went wrong?
+1. **Three “nots”.**  
+   Ask the model: *In three bullet points, what is an LLM **not**? (Not a database of facts, not a person, not live web by default.)*  
+   Compare its answer to **Chapter 3** in this part. If it adds a fourth “not” that this book never said, **delete** that extra point from your notes.
+
+2. **One fact, checked.**  
+   Ask for **one specific fact** you can check in two minutes (a date, a number, a title).  
+   Check it on another site.  
+   Write **one line**: was the model’s tone **confident** or **uncertain** when it was wrong (if it was wrong)?
 
 ---
 

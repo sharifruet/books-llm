@@ -30,13 +30,15 @@
 
 ## Chapter 1 — Training efficiency
 
-**Mixed precision** (e.g. bf16/fp16) cuts **memory** and increases **throughput** when numerically stable. **Parallelism** (data, tensor, pipeline, expert) trades **complexity** for **scale**. **Checkpointing** and **fault tolerance** matter when jobs run **days** and **fail**.
+**When a training job runs for days, “fast code” is not vibes—it is money on fire.** **Mixed precision** (e.g. bf16/fp16) cuts **memory** and increases **throughput** when numerically stable. **Parallelism** (data, tensor, pipeline, expert) trades **complexity** for **scale**. **Checkpointing** and **fault tolerance** matter when jobs run **days** and **fail**.
 
 ### Curriculum and data order
 
 **Data ordering** and **curriculum** can affect **convergence** and **final** behavior—often underexplored vs raw **FLOPs**.
 
-> **In this chapter.** Training efficiency is **systems + ML**; profile before **mythical** optimizations.
+*Friction:* teams chase **mythical** kernel wins before they profile **I/O** and **checkpoint** stalls—boring bottlenecks beat clever stories.
+
+**Takeaway:** training efficiency is **systems + ML**; profile before **mythical** optimizations.
 
 ---
 
@@ -48,7 +50,9 @@
 
 Product decisions live on a **Pareto** surface—**no** single “best” model. **Measure** **SLOs** and **$/query**.
 
-> **In this chapter.** Inference economics often **dominate** training **amortized** over users—optimize the **right** stage.
+*Anchor:* at scale, **inference** often **amortizes** training across users—optimize the stage that actually **burns** every month.
+
+**Summary line:** inference economics often **dominate** training **amortized** over users—optimize the **right** stage.
 
 ---
 
@@ -60,15 +64,17 @@ Product decisions live on a **Pareto** surface—**no** single “best” model.
 
 **ASICs** for inference/training **reshape** **$/token** when **volume** justifies **NRE**. **Decision** level: know **when** vendor **roadmaps** matter to **your** **scale**.
 
-> **In this chapter.** Hardware is **not** neutral—it **filters** which **techniques** are practical at **your** size.
+*Direct address:* if you are not at **token volumes** where silicon matters, **sleep**—strategy first, chip religion second.
+
+**Closing thread:** hardware is **not** neutral—it **filters** which **techniques** are practical at **your** size.
 
 ---
 
 ## Try it
 
-1. **Inference tradeoff.** Pick **one** technique (quantization, speculative decoding, smaller model). Name **what** you gain and **what** you risk.
+1. **Inference tradeoff.** Pick **one** technique (quantization, speculative decoding, smaller model). Name **what** you gain and **what** you risk. If your “risk” is vague (“quality might drop”), make it **task-specific**.
 
-2. **Bottleneck.** For a **long-context** chat product, is **training** or **inference** more likely to dominate **marginal** cost at scale? One sentence **why**.
+2. **Bottleneck.** For a **long-context** chat product, is **training** or **inference** more likely to dominate **marginal** cost at scale? One sentence **why**. If you wrote “both,” pick **one** dominant term and defend it.
 
 ---
 

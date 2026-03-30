@@ -32,6 +32,8 @@ You now have a workable picture of **how** a model generates text. This part tur
 
 ## Chapter 1 — What LLMs tend to do well
 
+**Which task would you give a tireless intern who reads fast but sometimes lies?** Drafts, outlines, rephrasing, format—**not** sole responsibility for your taxes.
+
 Large language models are not equally good at every task. Their strengths line up with **pattern-rich text**: language, format, and shallow structure that appears often in training data. Knowing the sweet spots helps you **delegate** the right work to the model—and reserve human judgment for the rest.
 
 ### Drafting, brainstorming, and rephrasing
@@ -54,17 +56,19 @@ Training data includes many languages, so models can **translate**, **summarize*
 
 These strengths are **assistive**. They are most valuable when a human—or a separate verification step—can catch errors before they matter.
 
-> **In this chapter.** LLMs shine at language-heavy, pattern-rich tasks: drafting, reformatting, brainstorming, and rough code—always subject to review when stakes rise.
+*Friction:* teams ship faster on **language-shaped** tasks and forget that “faster draft” does not mean “faster truth.” The mistake is organizational: skipping the review step because the **Slack message about the draft** arrived quickly.
 
 ---
 
 ## Chapter 2 — Hallucinations, mistakes, and calibration
 
+*Anchor in one image:* a model might hand you a paper with a **perfectly formatted** bibliography where **half the titles do not exist**. The failure is not sloppy formatting—it is **confident specificity without grounding**.
+
 A **hallucination** in common usage means: the model asserted something **specific** (a fact, a citation, a number) that is **false or unsupported**—often while sounding confident. Understanding *why* this happens keeps you from “prompt engineering” your way to perfect truth.
 
 ### Confident errors
 
-The training objective rewards **plausible** continuation. Explanations in the training data often sound sure. So the model can produce **well-phrased nonsense**: fake studies, wrong dates, made-up URLs, or subtle numerical slips. This is not a occasional bug; it is a **structural** risk of unconstrained generation.
+The training objective rewards **plausible** continuation. Explanations in the training data often sound sure. So the model can produce **well-phrased nonsense**: fake studies, wrong dates, made-up URLs, or subtle numerical slips. This is not an occasional bug; it is a **structural** risk of unconstrained generation.
 
 ### When to verify from another source
 
@@ -82,7 +86,7 @@ If you ask for references, you may get **plausible-looking** titles and authors 
 
 Separate **form** from **substance**. The model may produce beautiful structure around empty or false content. Your job is to supply **substance**—or to validate it elsewhere.
 
-> **In this chapter.** Hallucination is confident-sounding error; prompts alone do not fix it; verify when it matters, and never trust ungrounded citations.
+**Summary line:** hallucination is confident-sounding error; prompts alone do not fix it; verify when it matters, and never trust ungrounded citations.
 
 ---
 
@@ -104,7 +108,7 @@ You may see **stereotyping**, **denigration**, or **overconfidence** about group
 
 Later volumes return to **evaluation**, **alignment**, and **governance**. For now: **notice** when outputs feel off; **do not** treat the model as a neutral arbiter of people or history.
 
-> **In this chapter.** Training data carries society’s biases; models can echo them; mitigation is partial; fairness is partly technical, partly social—and unfinished.
+*Direct address:* if a screenshot “proves” the model is unbiased because it refused one slur, you have tested **marketing**, not **society**.
 
 ---
 
@@ -115,6 +119,8 @@ Capability is not the only axis. **Latency** shapes user experience; **price** s
 ### Free tiers, APIs, and “bigger costs more”
 
 Many vendors offer **free** or **cheap** tiers for small usage. Serious volume usually means **paid APIs** or **enterprise** contracts. Pricing is often **per token** (Part II): longer prompts and longer answers cost more. **Larger** models generally cost more per token than **smaller** ones; **long-context** or **premium** features may carry a surcharge.
+
+*One memorable detail:* a “short” user question can become expensive if your pipeline **keeps stuffing** ten pages of retrieved text into the context every turn—you pay for every token the model **reads**, not only the clever sentence at the end.
 
 Rough intuition: you pay for **compute** the provider spends to serve you—plus their margin, support, and compliance overhead.
 
@@ -130,15 +136,13 @@ Training large models from scratch uses **a lot** of energy; **inference** (each
 
 The balanced stance for this book: **awareness**, not performative guilt or greenwashing. Efficiency matters; so do **useful** applications and **who** gets to define tradeoffs.
 
-> **In this chapter.** Cost tracks tokens and model size; access is uneven; environmental impact is real and context-dependent—worth knowing, not obsessing over without numbers.
-
 ---
 
 ## Try it
 
-1. **Hallucination probe.** Ask the model for a **very specific** fact (invent a constraint: “the exact founding year of a small organization you can look up”). Verify online. If wrong, note the **tone** of the wrong answer—confident or hedged?
+1. **Hallucination probe.** Ask the model for a **very specific** fact (invent a constraint: “the exact founding year of a small organization you can look up”). Verify online. If wrong, note the **tone** of the wrong answer—confident or hedged? Bonus: try asking it to “cite sources” and watch whether the **citations** verify.
 
-2. **Strengths vs limits.** Pick one task the model does **well** (e.g. rewrite a paragraph) and one it does **poorly** for you (e.g. exact arithmetic). Write one sentence each: *why* the difference, in terms of this part.
+2. **Strengths vs limits.** Pick one task the model does **well** for you (e.g. rewrite a paragraph) and one it does **poorly** (e.g. exact arithmetic). Write one sentence each: *why* the difference, in terms of this part—no jargon required, but **no** generic “AI is not perfect.”
 
 ---
 

@@ -30,13 +30,15 @@ Shipping LLM features is **cross-functional**. This part covers **roles**, **doc
 
 ## Chapter 1 — Working in cross-functional teams
 
-**Product** defines success; **design** shapes trust and disclosure; **backend** owns latency and **API** contracts; **ML** (if present) owns **eval** and **model** choice; **legal** reviews **data** and **claims**. **No** single role “owns” safety—**checkpoints** (design review, legal sign-off for risky domains) prevent late surprises.
+**When the model misbehaves at 3 p.m. Friday, whose Slack gets the @-mention?** **Product** defines success; **design** shapes trust and disclosure; **backend** owns latency and **API** contracts; **ML** (if present) owns **eval** and **model** choice; **legal** reviews **data** and **claims**. **No** single role “owns” safety—**checkpoints** (design review, legal sign-off for risky domains) prevent late surprises.
 
 ### Documentation
 
 **Runbooks**: which **model**, which **prompt version**, how to **rollback**. **Playbooks** for **incidents** (spike in abuse, provider outage). Handoff should not depend on **one** engineer’s head.
 
-> **In this chapter.** Clarity of ownership beats heroics; document what you ship.
+*Friction:* “we will document it after launch” is how **tribal knowledge** becomes **customer-facing risk**.
+
+**Takeaway:** clarity of ownership beats heroics; document what you ship.
 
 ---
 
@@ -48,7 +50,9 @@ Shipping LLM features is **cross-functional**. This part covers **roles**, **doc
 
 Bring **safety specialists** or **policy** for **high-stakes** domains, **jurisdictional** questions, or **public** commitments. Volume III goes deeper on **alignment science** and **governance**; here, know **when** to ask for help.
 
-> **In this chapter.** Ship with clear disclosure, controls, and escalation paths—not only metrics.
+*Anchor:* “move fast and break things” is a poor fit when the **things** are people’s jobs, health records, or elections.
+
+**Summary line:** ship with clear disclosure, controls, and escalation paths—not only metrics.
 
 ---
 
@@ -62,15 +66,17 @@ Volume III, *From Models to Frontiers*, is for **depth**: **scaling laws**, **tr
 - **Basic** distributed training / inference vocabulary (even if you do not train).  
 - **Structured** thinking about **failure modes** and **societal** impact.
 
-> **In this chapter.** Volume II gets you to **ship**; Volume III helps you **reason** about what is coming next.
+*Direct address:* Volume II taught you to **ship**; Volume III helps you **argue** about what is coming next without mistaking marketing slides for physics.
+
+**Closing thread:** Volume II gets you to **ship**; Volume III helps you **reason** about what is coming next.
 
 ---
 
 ## Try it
 
-1. **RACI-style.** For one LLM feature, name **who** is accountable for: **model choice**, **prompt changes**, **customer comms** if something goes wrong.
+1. **RACI-style.** For one LLM feature, name **who** is accountable for: **model choice**, **prompt changes**, **customer comms** if something goes wrong. If every line is “the team,” that is not RACI—that is a **bus factor** wearing a scrum hat.
 
-2. **Volume III preview.** Open [From Models to Frontiers](../from-models-to-frontiers/from-models-to-frontiers.md); read the **introduction** outline. **One** topic you want to learn next—write it down.
+2. **Volume III preview.** Open [From Models to Frontiers](../from-models-to-frontiers/from-models-to-frontiers.md); read the **introduction** outline. **One** topic you want to learn next—write it down. No prize except **clarity**—still worth it.
 
 ---
 

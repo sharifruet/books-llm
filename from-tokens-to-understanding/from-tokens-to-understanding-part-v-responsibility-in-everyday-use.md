@@ -30,7 +30,7 @@ Parts I–IV built skill and judgment **inside** the interaction: what models ar
 
 ## Chapter 1 — Privacy and confidentiality
 
-Every chat is a **data action**: you may be sending text to a company’s servers, under **terms of service** you have not read. Privacy is not paranoia—it is **matching your sharing** to your risk.
+**Would you put this paragraph on a postcard—with your return address legible?** If not, pause before you paste it into a chat box. Every chat is a **data action**: you may be sending text to a company’s servers, under **terms of service** you have not read. Privacy is not paranoia—it is **matching your sharing** to your risk.
 
 ### What may happen to what you paste
 
@@ -52,7 +52,7 @@ Never paste **passwords**, **API keys**, **tokens**, or **recovery codes** into 
 
 Before you hit send, ask: **Would I put this on a postcard with my return address?** If not, **edit** or **use another channel**.
 
-> **In this chapter.** Treat chats as potentially logged; follow org rules; share the minimum; never paste secrets.
+*Friction:* “I only pasted a little” is how **small leaks** become big ones—context piles up across turns, and **screenshots** leave your control in one click.
 
 ---
 
@@ -63,6 +63,8 @@ Fluent text and synthetic **images**, **audio**, and **video** lower the cost of
 ### Synthetic text at scale
 
 LLMs can produce **news-like** prose, **fake quotes**, or **plausible** technical explanations that are wrong. That amplifies older problems: rumor, propaganda, and **SEO spam**. The defense is **provenance**: who published this, **when**, with what **evidence**, and can **independent** sources confirm it?
+
+*Memorable detail:* a fake “study” can include **authors who sound real** and **journals that almost exist**—the hallucination problem from Part III, weaponized at scale.
 
 ### Scams and social engineering
 
@@ -76,13 +78,11 @@ Video and audio **fakes** improve over time. **Slow down** before sharing emotio
 
 Young people may **trust** chat personas or **over-share** with friendly-sounding systems. Older adults or stressed individuals may fall for **authority** cues in text or voice. **Guardrails** in products help but do not replace **guidance**: age-appropriate rules, family conversations, and **human** support when someone is in crisis—not a chatbot.
 
-> **In this chapter.** Fluency enables deception at scale; verify through independent channels; protect vulnerable users with norms and care—not only software.
-
 ---
 
 ## Chapter 3 — Learning, writing, and working alongside LLMs
 
-Used well, LLMs can **clarify concepts**, **surface drafts**, and **speed revision**. Used poorly, they **substitute** for thinking, **hide** the absence of understanding, or **violate** rules you agreed to. The balance is **disclosure**, **authorship**, and **keeping humans in the loop** where judgment matters.
+**If you cannot explain the idea without the chat window open, do you understand it—or do you understand the interface?** Used well, LLMs can **clarify concepts**, **surface drafts**, and **speed revision**. Used poorly, they **substitute** for thinking, **hide** the absence of understanding, or **violate** rules you agreed to. The balance is **disclosure**, **authorship**, and **keeping humans in the loop** where judgment matters.
 
 ### Academic integrity
 
@@ -106,15 +106,13 @@ Teams benefit from **shared norms**: when AI is OK for **first drafts**, when **
 
 Models **compress** patterns from the past; they do not **carry** accountability. Decisions that affect **people’s lives** still need **people** who can explain **why**—not only what the model output was.
 
-> **In this chapter.** Follow your institution’s and profession’s rules; disclose where required; use AI to learn and draft, not to fake competence; keep humans responsible for outcomes.
-
 ---
 
 ## Try it
 
-1. **Terms check.** Open your chat product’s **terms of service** or privacy page. Skim for: training use of conversations, retention, human review. Note **one** setting or policy you did not know about.
+1. **Terms check.** Open your chat product’s **terms of service** or privacy page. Skim for: training use of conversations, retention, human review. Note **one** setting or policy you did not know about—bonus points if it changes what you paste tomorrow.
 
-2. **Redaction drill.** Take a real paragraph that contains something you would **not** paste into a public chat (name, ID, secret). **Rewrite** it so the model could still help (e.g. “Person A,” “Company X”) without leaking the sensitive bit.
+2. **Redaction drill.** Take a real paragraph that contains something you would **not** paste into a public chat (name, ID, secret). **Rewrite** it so the model could still help (e.g. “Person A,” “Company X”) without leaking the sensitive bit. If redaction feels tedious, that is the point: **tedium beats headlines**.
 
 ---
 

@@ -32,13 +32,15 @@ Models live behind **APIs**. This part covers **wrappers**, **observability**, *
 
 ## Chapter 1 — API design and abstraction layers
 
-Wrap vendor APIs behind **your** interface: **model name**, **temperature**, **max tokens** as **config**, not scattered strings. **Timeouts** and **retries** with **idempotency** keys for **side-effecting** tool calls.
+**How many places in your codebase spell the model name in a string?** Wrap vendor APIs behind **your** interface: **model name**, **temperature**, **max tokens** as **config**, not scattered strings. **Timeouts** and **retries** with **idempotency** keys for **side-effecting** tool calls.
 
 ### Structured outputs
 
 Parse **JSON** defensively—models **stray**. **Schema validation** before downstream use. **Streaming** partial tokens: buffer until **valid** chunk if needed.
 
-> **In this chapter.** One abstraction layer makes swaps and tests easier; validate all structured output.
+*Memorable detail:* half-valid JSON during streaming is a **feature** for UX and a **bug** for parsers—design the boundary explicitly.
+
+**Takeaway:** one abstraction layer makes swaps and tests easier; validate all structured output.
 
 ---
 
@@ -50,7 +52,9 @@ Log **request IDs**, **latency**, **token counts**, **model ID**, **error codes*
 
 Track **error rate**, **p95 latency**, **cost per request**, and **quality** proxies from **offline** evals. **Alert** on spikes—often the first sign of a **bad deploy** or **provider** issue.
 
-> **In this chapter.** Observability enables blameless postmortems; redact before you aggregate.
+*Friction:* logs that **cannot** be correlated across steps are **story fragments**, not observability.
+
+**Summary line:** observability enables blameless postmortems; redact before you aggregate.
 
 ---
 
@@ -58,7 +62,9 @@ Track **error rate**, **p95 latency**, **cost per request**, and **quality** pro
 
 **Token** accounting per **route** and **customer**. **Cache** repeated **context** where safe. **Batch** where latency allows. **Right-size** models: small model for **classification**, large for **generation**—if routing is worth the complexity.
 
-> **In this chapter.** Cost is a feature; measure before you optimize the wrong layer.
+*Direct address:* if you only look at **average** cost per request, tail latency and **retries** will hide in the average like quiet debt.
+
+**Compact read:** cost is a feature; measure before you optimize the wrong layer.
 
 ---
 
@@ -70,15 +76,17 @@ Track **error rate**, **p95 latency**, **cost per request**, and **quality** pro
 
 Run tools in **minimal** environments; **no** raw SQL from model output without **validation**. **Trust boundaries** mirror classic **web security**—with new angles.
 
-> **In this chapter.** Treat the model as an untrusted client; tools are the real power.
+*One-line analogy:* the model is a **clever user agent** that reads every email in the thread—design permissions accordingly.
+
+**Closing thread:** treat the model as an untrusted client; tools are the real power.
 
 ---
 
 ## Try it
 
-1. **Envelope.** Sketch a **pseudo-request** object your API would send upstream: fields for **model**, **messages**, **tools**, **timeout**. What is **one** field you would **not** expose to the browser?
+1. **Envelope.** Sketch a **pseudo-request** object your API would send upstream: fields for **model**, **messages**, **tools**, **timeout**. What is **one** field you would **not** expose to the browser? If you cannot think of one, imagine your worst competitor’s **JavaScript** calling your API.
 
-2. **Log policy.** List **three** things worth logging for a single LLM request and **one** thing you would **strip** or **hash** by default.
+2. **Log policy.** List **three** things worth logging for a single LLM request and **one** thing you would **strip** or **hash** by default. If “full prompt text” is on your log list, say why out loud to a security-minded friend.
 
 ---
 

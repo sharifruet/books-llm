@@ -32,13 +32,15 @@ Prompts are not vibes—they are **interfaces**. This part treats them like **ve
 
 ## Chapter 1 — Prompt structure and patterns
 
-**System** messages set global rules; **user** messages carry the task; **assistant** history is prior output; **tool** messages carry **results** from your code. APIs differ in naming—map them mentally to those roles.
+**Who speaks first in your API—and does your app even know?** **System** messages set global rules; **user** messages carry the task; **assistant** history is prior output; **tool** messages carry **results** from your code. APIs differ in naming—map them mentally to those roles.
 
 ### Few-shot and chain-of-thought
 
 **Few-shot** examples teach **format** faster than prose. **Chain-of-thought** (“think step by step”) can improve **reasoning-heavy** tasks—and can **hurt** when you need **speed**, **brevity**, or when the model **leaks** reasoning you do not want users to see. **Hide** chain-of-thought in internal prompts when appropriate.
 
-> **In this chapter.** Roles are contracts; few-shot locks format; CoT is a tool with tradeoffs.
+*Friction:* CoT can look like “more intelligent” output when it is really **more tokens**—measure latency and user trust, not vibes.
+
+**Takeaway:** roles are contracts; few-shot locks format; CoT is a tool with tradeoffs, not a universal upgrade.
 
 ---
 
@@ -50,11 +52,13 @@ Treat prompts like **code**: **branch**, **review**, and **tag** versions (e.g. 
 
 For changes that affect **metrics**, run **offline** evals on a **golden set** (Part IV) before live A/B. **Online** experiments need **traffic** and **guardrails**—do not ship prompt changes without a rollback path.
 
+*Memorable detail:* the prompt that wins in a **five-person** Slack poll is not the same as the prompt that wins on **10k** real queries—selection bias wears a friendly face.
+
 ### Templates and guardrails
 
 **Variables** (user name, locale) belong in templates, not copy-paste. **Guardrails** (“never output raw JSON to end users”) belong in **system** or **post-processing**, not hope.
 
-> **In this chapter.** Version prompts, measure before wide rollout, separate data from policy.
+**Summary:** version prompts, measure before wide rollout, separate data from policy.
 
 ---
 
@@ -66,7 +70,9 @@ For changes that affect **metrics**, run **offline** evals on a **golden set** (
 
 **Decompose** tasks into steps; **self-check** (“list assumptions before answering”); **constrain** output (**JSON schema**, **regex** validation). For **tools**, validate arguments in **code** before execution.
 
-> **In this chapter.** Debug with structure: smaller steps, validation, and explicit uncertainty.
+*Direct address:* if your “fix” is always **more instructions in English**, you may be fighting **sampling and objectives**—sometimes structure beats eloquence.
+
+**Compact read:** debug with structure: smaller steps, validation, and explicit uncertainty.
 
 ---
 
@@ -76,21 +82,23 @@ For changes that affect **metrics**, run **offline** evals on a **golden set** (
 
 ### Expectations
 
-Tell users **what the feature does not do** (no legal advice, no real-time data unless wired). **Loading** and **error** states should be honest—masking failures erodes trust.
+Tell users **what the feature does not do** (no legal advice, no real-time data unless wired). **Loading** and **error** states should be honest—masking failures erodes trust faster than a blunt error string.
 
 ### Team norms
 
 Decide how **engineering** and **design** review **tone**, **disclosure** of AI, and **fallbacks** when the model is down. Document **prompts** and **model IDs** in **runbooks**.
 
-> **In this chapter.** UX and ops are part of the feature—not polish after the fact.
+*One-line analogy:* bad loading states are like a **spinning wheel** on a payment form—polite, expensive, and untrustworthy.
+
+**Closing thread:** UX and ops are part of the feature—not polish after the fact.
 
 ---
 
 ## Try it
 
-1. **Template.** Write a **system** prompt + one **user** template with `{variable}` slots for a task you care about. Version it (`v0.1`) in a file.
+1. **Template.** Write a **system** prompt + one **user** template with `{variable}` slots for a task you care about. Version it (`v0.1`) in a file. If you cannot stand to name `v0.1`, you are exactly who this exercise is for.
 
-2. **Debug.** Reproduce **one** failure (wrong format or hallucination). Change **only** the prompt: add a constraint or a single-shot example. Did behavior improve?
+2. **Debug.** Reproduce **one** failure (wrong format or hallucination). Change **only** the prompt: add a constraint or a single-shot example. Did behavior improve? If not, note whether the failure was **prompt-shaped** at all—or retrieval, tools, or model limits.
 
 ---
 

@@ -30,13 +30,15 @@
 
 ## Chapter 1 — What to measure
 
-**Accuracy** on a task is not one number: **correctness** of facts, **helpfulness**, **format** adherence, **latency**, **cost per success**, and **harm** rate. Pick **few** primary metrics aligned with **user value**—not every leaderboard score.
+**Which number would you defend in a postmortem—the leaderboard score or the refund rate?** **Accuracy** on a task is not one number: **correctness** of facts, **helpfulness**, **format** adherence, **latency**, **cost per success**, and **harm** rate. Pick **few** primary metrics aligned with **user value**—not every leaderboard score.
 
 ### Human vs model-as-judge vs automation
 
 **Human** labels are gold but expensive. **Model-as-judge** scales but inherits **biases**. **Automatic** checks (JSON valid, regex, unit tests on tool args) are **cheap**—combine layers.
 
-> **In this chapter.** Define success in user terms; mix human spot checks with scalable signals.
+*Friction:* the metric you **optimize** becomes the behavior you **get**—Goodhart visits LLM teams too.
+
+**Takeaway:** define success in user terms; mix human spot checks with scalable signals.
 
 ---
 
@@ -48,7 +50,9 @@ A **golden set** is a **fixed** batch of inputs (and often expected properties) 
 
 **Block releases** when golden metrics fall below threshold—same as unit tests. **Pin** model versions in config until you **re-validate**.
 
-> **In this chapter.** Treat prompt and model changes like code changes: test before merge.
+*Tiny vignette:* “nothing changed in our code” is compatible with “the provider swapped weights on Tuesday.” Pinning is not paranoia—it is **versioning**.
+
+**Summary line:** treat prompt and model changes like code changes: test before merge.
 
 ---
 
@@ -60,15 +64,17 @@ A **golden set** is a **fixed** batch of inputs (and often expected properties) 
 
 Define **when** a human reviews **edge cases**—legal, self-harm, targeted harassment. **Automation** should not be the last word on every abuse report.
 
-> **In this chapter.** Safety is product design: layers, logging discipline, and human escalation paths.
+*Direct address:* if your moderation story is “we used the API flag,” you may have outsourced **judgment** without outsourcing **accountability**.
+
+**Closing thread:** safety is product design: layers, logging discipline, and human escalation paths.
 
 ---
 
 ## Try it
 
-1. **One metric.** Pick a feature you know. Name **one** measurable outcome (e.g. “% answers with valid JSON”) and **one** human-judged aspect.
+1. **One metric.** Pick a feature you know. Name **one** measurable outcome (e.g. “% answers with valid JSON”) and **one** human-judged aspect. If they are the same metric dressed in two adjectives, split them until they are not.
 
-2. **Golden test.** Write **three** input prompts you would put in a **regression** suite for that feature and **what** you would check automatically vs manually.
+2. **Golden test.** Write **three** input prompts you would put in a **regression** suite for that feature and **what** you would check automatically vs manually. Bonus: include **one** nasty edge case you are tempted to skip—that is usually the one that burns you.
 
 ---
 

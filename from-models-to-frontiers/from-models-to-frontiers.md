@@ -6,7 +6,7 @@
 
 ## Audience
 
-Researchers, senior engineers, and technical leads who already build or critically evaluate LLM-based systems and want depth on **scaling**, **theory**, **alignment and safety**, **efficiency**, and **emerging paradigms** (multimodal models, agents, and open research questions). Readers should be comfortable with the vocabulary and day-to-day practice covered in *From Prompts to Systems* (Volume II); this volume assumes you can read papers and implementation-oriented documentation without needing every acronym explained from scratch.
+Researchers, senior engineers, and technical leads who already build or critically evaluate LLM-based systems and want depth on **scaling**, **theory**, **alignment and safety**, **efficiency**, and **emerging paradigms** (multimodal models, agents, and open research questions). Readers should be comfortable with the vocabulary and day-to-day practice covered in *From Prompts to Systems* (Volume II); this volume assumes you can read papers and implementation-oriented documentation without needing every acronym explained from scratch. If you are the kind of reader who skims the **Try it** first to see whether your paper pile is lying to you, this is still the right volume.
 
 ---
 
@@ -16,11 +16,13 @@ Researchers, senior engineers, and technical leads who already build or critical
 
 The first two volumes move from **what language models are** to **how to use them well in real workflows**. *From Models to Frontiers* steps back and forward at once: backward to the **scientific and engineering forces** that make today’s models possible, and forward to the **research directions** that will shape the next years—scaling and data, alignment, robustness, efficient training and deployment, multimodality, agents, and the open problems that still lack satisfactory answers.
 
+If you have ever watched a **scaling curve** get treated like a promise and a **benchmark** get treated like a personality test, you already know why this book exists.
+
 The goal is not to replace a PhD curriculum or a full systems course. It is to give you a **structured map of the frontier**: enough depth to read primary sources with judgment, to participate in technical debates, and to decide where your own learning or R&D should go next—whether you care about safety, performance, cost, or fundamental understanding.
 
 ### How this volume is organized
 
-The outline groups topics into **pillars** that recur in both industry and academia: **scale and pretraining**, **alignment and societal impact**, **efficiency**, **capabilities beyond text**, and **open questions**. Within each part, chapters mix **conceptual framing** with **representative techniques** (to be expanded as you draft). Some themes—e.g. evaluation, interpretability, governance—appear in more than one part because they cut across pillars.
+The outline groups topics into **pillars** that recur in both industry and academia: **scale and pretraining**, **alignment and societal impact**, **efficiency**, **capabilities beyond text**, and **open questions**. Within each part, chapters mix **conceptual framing** with **representative techniques** (to be expanded as you draft). Some themes—e.g. evaluation, interpretability, governance—appear in more than one part because they cut across pillars—same word, different altitude, not copy-paste.
 
 ### Prerequisites and suggested use
 
@@ -65,6 +67,8 @@ This section collects **optional material** for Volume III: exercise index, glos
 Each part file includes a **plain list** mirroring the contents **table** for tools or readers that do not render tables well.
 
 ### Exercise index (*Try it* sections)
+
+The *Try it* prompts are meant to be **concrete and slightly cheeky** where helpful—designed to surface real tradeoffs on your own reading list, not to grade you.
 
 | Part | File | Rough focus |
 |------|------|-------------|

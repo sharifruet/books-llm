@@ -32,6 +32,8 @@ This part is about **why** large models look the way they do: **scaling trends**
 
 ## Chapter 1 — Scaling laws and predictable returns
 
+**If you have only seen scaling plots in blog posts, here is what they hide:** they are not **contracts** with your benchmark, your domain, or your budget.
+
 **Scaling laws** summarize empirical relationships: for a family of models, **loss** (or downstream metrics) often improves predictably as you increase **compute**, **data**, or **parameters**—holding other factors roughly constant.
 
 ### Chinchilla-style tradeoffs
@@ -42,7 +44,9 @@ Rough guidance from the Chinchilla line of work: given a **fixed compute** budge
 
 **Data quality** beats raw token count when domains shift. **Saturation** appears when benchmarks max out or **memorization** dominates. **Domain shift** breaks naive scaling plots. **Inference** and **alignment** costs may dominate **product** economics even when training scaled well.
 
-> **In this chapter.** Scaling laws help budget experiments; they do not replace measurement on **your** task and distribution.
+*Friction:* teams ship “we trained a bigger model” when the failure mode was **distribution shift**—scaling cannot apologize for the wrong data.
+
+**Takeaway:** scaling laws help budget experiments; they do not replace measurement on **your** task and distribution.
 
 ---
 
@@ -54,11 +58,13 @@ Rough guidance from the Chinchilla line of work: given a **fixed compute** budge
 
 **Test-set leakage** inflates scores. **Documentation** of training cutoffs and **benchmark** construction matters for **honest** comparisons. Treat leaderboard numbers with **provenance**.
 
+*Memorable detail:* leaderboard jumps when benchmark text **was in the crawl**—not because the model “understood” more, but because the exam was accidentally **open-book**.
+
 ### Datasheets for datasets
 
 **Datasheets** and **data statements** document **intent**, **provenance**, **limitations**, and **biases**—minimal professionalism for datasets that train **foundation** models.
 
-> **In this chapter.** Data is the second half of scaling; curation and documentation are part of **science**, not housekeeping.
+**Summary line:** data is the second half of scaling; curation and documentation are part of **science**, not housekeeping.
 
 ---
 
@@ -70,7 +76,9 @@ Transformers remain **dominant**, but variants matter: **long-context** methods 
 
 Some behaviors **emerge** with scale; others are **built in** by **architecture** and **objective**. Separating the two requires **controlled** comparisons—not only headline parameters.
 
-> **In this chapter.** Architecture is a lever; empirical validation on your workload beats brand names.
+*Direct address:* brand-name architecture debates are fun at conferences; **your** workload only cares what **measures** move.
+
+**Closing thread:** architecture is a lever; empirical validation on your workload beats logo recognition.
 
 ---
 
@@ -82,15 +90,17 @@ Some behaviors **emerge** with scale; others are **built in** by **architecture*
 
 Typical story: **pretrain** → **SFT** → **preference** training → optional **iterative** rounds with **evaluation** gates. Each stage can **shift** capabilities and **failure modes**—**not** interchangeable knobs.
 
-> **In this chapter.** Post-training aligns **behavior** to deployment needs; it is not “one more epoch” of pretraining.
+*Tiny vignette:* “one more epoch” of SFT does not fix a **preference** stage that rewards **sycophancy**—different stage, different pathology.
+
+**Compact read:** post-training aligns **behavior** to deployment needs; it is not “one more epoch” of pretraining.
 
 ---
 
 ## Try it
 
-1. **Scaling intuition.** In two sentences, explain why **doubling parameters** without more **data** may **not** follow the same loss curve as a balanced scaling policy.
+1. **Scaling intuition.** In two sentences, explain why **doubling parameters** without more **data** may **not** follow the same loss curve as a balanced scaling policy. If your answer mentions “Chinchilla,” also say **plainly** what could go wrong in **your** domain.
 
-2. **Leakage.** Name **one** way benchmark **contamination** can inflate scores and **one** mitigation researchers use.
+2. **Leakage.** Name **one** way benchmark **contamination** can inflate scores and **one** mitigation researchers use. Bonus smugness if your mitigation is boring (documentation, held-out construction) instead of magical.
 
 ---
 

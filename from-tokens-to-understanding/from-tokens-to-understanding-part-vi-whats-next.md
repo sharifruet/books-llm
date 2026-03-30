@@ -50,11 +50,11 @@ If one term still feels fuzzy, **return** to the part of Volume I where it was m
 - **Re-read** terms of service when you **change** products or turn on **new** features (training opt-in, retention).  
 - **Say no** when the task needs **proof**, **secrecy**, or **human accountability** (Part IV, Chapter 4).
 
+*Tiny vignette:* the best practitioners I know are boring in the best way—they **write down** the prompt that worked and **date** it. Creativity without logging is **amnesia**.
+
 ### Keeping the glossary alive
 
 Language drifts: “**alignment**,” “**reasoning**,” “**agent**” mean different things in marketing than in research. When you see a bold claim, ask: **which system**, under **which test**, with **which** limits?
-
-> **In this chapter.** Own a small vocabulary; rehearse habits—verify, iterate, document, re-check policies, refuse bad fits—not just clever prompts.
 
 ---
 
@@ -91,15 +91,15 @@ None of this requires a computer science degree; it requires **deliberate** prac
 
 If you have worked through Parts I–VI, you have a **grounded** picture: what LLMs are, how they behave, how to **prompt** and **when to stop**, and how to **live** with these tools without surrendering **judgment**. That is enough to be a **thoughtful** user—and a **prepared** reader for everything that follows.
 
-> **In this chapter.** Volume II is the bridge to building; optional skills are learnable; Volume III awaits when you need the frontier.
+*If you have only skimmed:* the glossary above still helps—but the habits work best when **Try it** was not only read.
 
 ---
 
 ## Try it
 
-1. **Glossary flashcards.** On paper or in a note file, write the five terms from Chapter 1 (**token**, **context**, **prompt**, **hallucination**, **fine-tuning**) **without** peeking—then open the chapter and fix any gaps.
+1. **Glossary flashcards.** On paper or in a note file, write the five terms from Chapter 1 (**token**, **context**, **prompt**, **hallucination**, **fine-tuning**) **without** peeking—then open the chapter and fix any gaps. If you got “fine-tuning” confused with “prompting,” welcome to the club; Volume II exists partly to separate those lanes.
 
-2. **Volume II preview.** Skim the **introduction** of [From Prompts to Systems](../from-prompts-to-systems/from-prompts-to-systems.md). Write **one** topic from Volume II you want next (e.g. evaluation, APIs, RAG) and **one** skill you might practice (e.g. read a JSON example).
+2. **Volume II preview.** Skim the **introduction** of [From Prompts to Systems](../from-prompts-to-systems/from-prompts-to-systems.md). Write **one** topic from Volume II you want next (e.g. evaluation, APIs, RAG) and **one** skill you might practice (e.g. read a JSON example). No wrong answers—only unfollowed curiosity.
 
 ---
 

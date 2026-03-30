@@ -32,13 +32,15 @@
 
 ## Chapter 1 — Alignment in practice: goals and tensions
 
-Common shorthand—**helpful, honest, harmless**—masks **tensions**: **helpful** answers can be **harmful** if wrong; **refusal** can be **honest** but **unhelpful**. **Metrics** for each axis conflict under **optimization**—**Goodhart** effects when teams maximize one score.
+**Which virtue do you publish on the dashboard—and which virtues quietly starve?** Common shorthand—**helpful, honest, harmless**—masks **tensions**: **helpful** answers can be **harmful** if wrong; **refusal** can be **honest** but **unhelpful**. **Metrics** for each axis conflict under **optimization**—**Goodhart** effects when teams maximize one score.
 
 ### Specification gaming
 
 Models (and **humans** in the loop) optimize **measurable** proxies. **Red-team** for **proxy failure**; **combine** behavioral tests with **judgment**.
 
-> **In this chapter.** Alignment is multi-objective; watch for gaming the metric you publish internally.
+*Friction:* the slide that says “harm rate ↓” may hide **helpfulness ↓** or **honesty ↓**—multi-objective alignment is not a single KPI.
+
+**Takeaway:** alignment is multi-objective; watch for gaming the metric you publish internally.
 
 ---
 
@@ -50,7 +52,9 @@ Models (and **humans** in the loop) optimize **measurable** proxies. **Red-team*
 
 **Train** distributions rarely match **deployment**. **Long-horizon** tasks compound **small** errors. **Robustness** requires **stress tests**, not only average-case accuracy.
 
-> **In this chapter.** Safety evals are **living** systems; adversaries do not stop at your last benchmark.
+*Memorable detail:* the benchmark you passed in January can be **memorized** by March—adversaries and the internet both move.
+
+**Summary line:** safety evals are **living** systems; adversaries do not stop at your last benchmark.
 
 ---
 
@@ -62,7 +66,9 @@ Models (and **humans** in the loop) optimize **measurable** proxies. **Red-team*
 
 Track **drift** in inputs and outputs, **misuse** patterns, and **escalation** paths to **human** review. **Interpretability** without **governance** does not **fix** incidents.
 
-> **In this chapter.** Know what you can **measure** in production; invest in **alerts** and **playbooks**.
+*Direct address:* if your “interpretability” cannot change a **runbook**, it is wallpaper.
+
+**Compact read:** know what you can **measure** in production; invest in **alerts** and **playbooks**.
 
 ---
 
@@ -74,15 +80,17 @@ Track **drift** in inputs and outputs, **misuse** patterns, and **escalation** p
 
 Powerful models enable **benefit** and **misuse**; **international** and **institutional** contexts differ. This book **points** to policy literatures rather than **prescribing** law.
 
-> **In this chapter.** Governance is **choices** under uncertainty; pair technical evals with **stakeholder** process.
+*One-line analogy:* governance is **weather routing**—you optimize under uncertainty, not under the fantasy of full control.
+
+**Closing thread:** governance is **choices** under uncertainty; pair technical evals with **stakeholder** process.
 
 ---
 
 ## Try it
 
-1. **Tradeoff.** Name **two** alignment goals that can **conflict** on the same user query and how you might **disambiguate** in product policy.
+1. **Tradeoff.** Name **two** alignment goals that can **conflict** on the same user query and how you might **disambiguate** in product policy. If your answer is “we will ask the user,” say what you do when the user is **wrong**.
 
-2. **Red team.** Draft **one** adversarial user goal (non-harmful to describe) that tests **over-refusal** vs **under-safety**—what would you **measure**?
+2. **Red team.** Draft **one** adversarial user goal (non-harmful to describe) that tests **over-refusal** vs **under-safety**—what would you **measure**? If you cannot write it without giggling nervously, you are in the right neighborhood.
 
 ---
 

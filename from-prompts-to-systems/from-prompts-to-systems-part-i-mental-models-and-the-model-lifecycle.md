@@ -32,17 +32,19 @@ Volume I explained **what** LLMs are and how they behave in the abstract. This p
 
 ## Chapter 1 — From playground to product
 
-A **playground** proves the model can do something cool once. A **product** does it **reliably**, under **load**, with **clear ownership** when things break.
+**When did “it works on my laptop” last survive first contact with a customer?** A **playground** proves the model can do something cool once. A **product** does it **reliably**, under **load**, with **clear ownership** when things break.
 
 ### What changes at launch
 
 **Latency** budgets appear: users tolerate seconds for some tasks, milliseconds for others. **Cost** becomes continuous—tokens, seats, or inference hours—not a one-off experiment. **Versioning** matters: which **model ID**, which **prompt template version**, which **retrieval index** went into this answer? **Ownership** means an on-call path: who rolls back a bad prompt change?
 
+*Friction smart teams ignore until 2 a.m.:* the model’s **answer** can be perfect while the **system** is wrong—timeouts, missing logs, no idempotent retries on tool calls. Reliability is not a property of the neural net alone.
+
 ### The stack around the model
 
 Think in layers: **client** (web, mobile, internal tool) → **application** (your business logic) → **orchestration** (prompt assembly, retrieval, tool routing) → **model provider** (API or self-hosted weights) → **data** (vector store, caches, feature flags). The LLM is one box; **reliability** is a system property.
 
-> **In this chapter.** Shipping adds latency, cost, versioning, and ownership; map the stack before you optimize the model alone.
+*Takeaway:* shipping adds latency, cost, versioning, and ownership—map the stack before you optimize the model in isolation.
 
 ---
 
@@ -58,13 +60,15 @@ The model learns broad **language and world patterns** from large text (and ofte
 
 Later stages teach **dialogue format**, **refusal** boundaries, and **helpfulness** as judged by raters or automated preference models. **Capability** (reasoning, knowledge) and **alignment** (policy, tone) are related but **not identical**: a base model can be strong yet unsafe for direct users; a chat model can be polite yet shallow.
 
-> **In this chapter.** “Smarter” and “more aligned” are different axes; cards that describe pipeline stages help you predict behavior changes.
+*Memorable mistake:* “We upgraded to the **smarter** model” when the change was mostly **style and policy**—then the team is surprised when **reasoning** did not jump the way marketing implied.
+
+**Compact read:** “Smarter” and “more aligned” are different axes; cards that describe pipeline stages help you predict behavior changes.
 
 ---
 
 ## Chapter 3 — Choosing a model and reading model cards
 
-**Model cards** (and API docs) are your **contract** for what to expect: **context length**, **modalities** (text-only vs vision), **languages**, **license** (can you fine-tune? deploy how?), and **known limitations**.
+**If you A/B test prompts before you read the card, you are optimizing noise.** **Model cards** (and API docs) are your **contract** for what to expect: **context length**, **modalities** (text-only vs vision), **languages**, **license** (can you fine-tune? deploy how?), and **known limitations**.
 
 ### Deployment constraints
 
@@ -74,7 +78,9 @@ Will you run **hosted APIs** only, or **on-prem** / **VPC** with certain certifi
 
 **Open-weight** models can be inspected, fine-tuned, and run locally—at the cost of **your** ops burden. **Closed APIs** shift **scaling and safety** to the vendor; you get less control over internals. Neither is universally “better”; fit to **risk**, **budget**, and **latency**.
 
-> **In this chapter.** Read the card for context, license, modalities, and limits before A/B testing clever prompts.
+*Direct address:* the “best” model on a leaderboard is not the best model for **your** compliance checklist.
+
+**Summary line:** read the card for context, license, modalities, and limits before A/B testing clever prompts.
 
 ---
 
@@ -86,21 +92,23 @@ Everything the model “remembers” in-session is what you put in the **prompt*
 
 Long chats and documents exceed **context**. Strategies: **truncate** old turns, **summarize** history, or **start fresh** threads. Each trades **fidelity** for **space**.
 
+*Tiny vignette:* summarization is a **lossy compression** of the conversation—fine for vibes, catastrophic if the lost line was “allergic to penicillin.”
+
 ### Session state vs retrieval vs fine-tuning
 
 - **Session state**: your database of user facts, re-injected when relevant.  
 - **Retrieval**: fetch **documents** per query (Part III).  
 - **Fine-tuning**: adjust weights with **curated** examples—use when behavior must be **consistent** and **prompting + RAG** are insufficient (details in Volume III).
 
-> **In this chapter.** Context is designed, not magical; retrieval and adaptation are separate tools with separate costs.
+**Closing thread:** context is designed, not magical; retrieval and adaptation are separate tools with separate costs.
 
 ---
 
 ## Try it
 
-1. **Playground vs product.** List **five** concerns that appear when moving an internal chat demo to a customer-facing feature (e.g. latency, logging). Which are **not** about the raw model quality?
+1. **Playground vs product.** List **five** concerns that appear when moving an internal chat demo to a customer-facing feature (e.g. latency, logging). Which are **not** about the raw model quality? If everything on your list sounds like “make the prompt longer,” go back one chapter.
 
-2. **Model card.** Open a **model card** or API doc for a model you might use. Note: **context length**, **license**, **one** limitation, and **one** training stage mentioned.
+2. **Model card.** Open a **model card** or API doc for a model you might use. Note: **context length**, **license**, **one** limitation, and **one** training stage mentioned. Bonus smugness if you find a limitation that would have embarrassed you in production.
 
 ---
 
