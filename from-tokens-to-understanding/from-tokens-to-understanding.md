@@ -115,6 +115,12 @@ Each link below opens a full part — with introduction, chapter prose, exercise
 
 ---
 
+## Detailed outline
+
+→ See parts below.
+
+---
+
 ## Notes
 
 ### Accessibility

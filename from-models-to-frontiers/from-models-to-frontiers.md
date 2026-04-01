@@ -74,6 +74,12 @@ You do not need to derive backpropagation or read CUDA kernels. Where topics dep
 
 ---
 
+## Detailed outline
+
+→ See parts below.
+
+---
+
 ## Parts and chapters
 
 | | Part | Chapters | Core question |
@@ -94,7 +100,9 @@ You do not need to derive backpropagation or read CUDA kernels. Where topics dep
 
 ---
 
-## Key terms used throughout this volume
+## Notes
+
+### Key terms used throughout this volume
 
 **Scaling law** — An empirical relationship linking compute, data volume, model size, and loss. Useful for budgeting training experiments and reasoning about tradeoffs. Not a promise about any specific downstream task or domain.
 
@@ -122,7 +130,7 @@ You do not need to derive backpropagation or read CUDA kernels. Where topics dep
 
 ---
 
-## How to use this volume
+### How to use this volume
 
 **Read it as a map, not a textbook.** Each chapter explains a landscape — what the key techniques are, what they trade off, what the open questions are — not how to implement every detail. Primary sources (papers, model cards, documentation) remain the authoritative reference.
 

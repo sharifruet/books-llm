@@ -61,13 +61,33 @@ def combine_hub_and_parts(
     return "".join(chunks)
 
 
+def make_cover_html(title: str, subtitle: str, volume: str, level: str) -> str:
+    return (
+        '<div class="cover-page">\n'
+        f'<p class="cover-series">The LLM Trilogy</p>\n'
+        '<hr class="cover-rule">\n'
+        f'<h1 class="cover-title">{title}</h1>\n'
+        f'<p class="cover-subtitle">{subtitle}</p>\n'
+        f'<p class="cover-vol">{volume} · {level}</p>\n'
+        '<p class="cover-author">Sharif Uddin</p>\n'
+        "</div>\n\n"
+    )
+
+
 def combine_volume1_markdown(root: Path) -> str:
-    return combine_hub_and_parts(
+    cover = make_cover_html(
+        title="From Tokens to Understanding",
+        subtitle="An introduction to large language models",
+        volume="Volume I",
+        level="Beginner",
+    )
+    body = combine_hub_and_parts(
         root / "from-tokens-to-understanding",
         "from-tokens-to-understanding.md",
         PART_FILES,
         "\n## Full text — Parts I through VI\n\n",
     )
+    return cover + body
 
 
 def main() -> int:

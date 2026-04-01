@@ -55,7 +55,13 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.combine:
-        combined = v1.combine_hub_and_parts(
+        cover = v1.make_cover_html(
+            title="From Prompts to Systems",
+            subtitle="Intermediate practice with large language models",
+            volume="Volume II",
+            level="Intermediate",
+        )
+        combined = cover + v1.combine_hub_and_parts(
             root / "from-prompts-to-systems",
             "from-prompts-to-systems.md",
             PART_FILES,

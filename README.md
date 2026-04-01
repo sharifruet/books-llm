@@ -90,4 +90,3 @@ For those who need to understand the science behind the product: scaling laws, d
 
 ---
 
-*Work in progress.*

@@ -54,7 +54,13 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.combine:
-        combined = v1.combine_hub_and_parts(
+        cover = v1.make_cover_html(
+            title="From Models to Frontiers",
+            subtitle="Advanced topics in large language modeling",
+            volume="Volume III",
+            level="Advanced",
+        )
+        combined = cover + v1.combine_hub_and_parts(
             root / "from-models-to-frontiers",
             "from-models-to-frontiers.md",
             PART_FILES,
