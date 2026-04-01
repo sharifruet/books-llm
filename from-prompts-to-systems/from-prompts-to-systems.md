@@ -4,9 +4,22 @@
 
 *Sharif Uddin*
 
-## Audience
+---
 
-**Developers, analysts, product managers, and technical writers** who already use LLMs in daily work and want **clearer mental models**, **repeatable workflows**, and **enough depth to ship** features—not just one-off prompts—without yet diving into research-scale training or frontier theory (that is Volume III). You should be comfortable with *From Tokens to Understanding* (Volume I) or equivalent: tokens, context windows, basic prompting, and honest limits of the technology. If you sometimes jump straight to the *Try it* boxes to stress-test your current project, that is a valid way to read—this volume is written so exercises **interrupt** autopilot.
+## Who this book is for
+
+This book is for people who are past the demo stage. You have used a language model, you have seen it be impressive, and you have seen it fail in ways that made you wonder whether it can be trusted in a real product. You want to know how to close the gap between "this demo is amazing" and "this feature works reliably in production."
+
+More specifically, this book is for:
+
+- **Developers** building any feature that calls an LLM API — even once.
+- **Product managers** who need to choose between approaches, define what success looks like, and explain decisions to stakeholders.
+- **Technical writers, analysts, and content strategists** building AI-assisted workflows.
+- **Anyone who owns an LLM-powered feature** and needs to maintain it, measure it, and hand it off to someone else.
+
+**What you should already know:** The concepts from Volume I — tokens, context windows, the prediction loop, hallucination as a structural property, basic prompting — are assumed. You do not need to have memorized every detail, but you should be able to explain each term comfortably. If something in this book references a Volume I concept that feels fuzzy, the Volume I parts are worth revisiting before continuing.
+
+**Helpful but not required:** Light scripting ability (Python or JavaScript), comfort reading JSON-shaped API responses, and basic familiarity with git. The book stays pseudocode-first where possible, but some chapters will be richer if you can run an API call yourself.
 
 ---
 
@@ -14,29 +27,35 @@
 
 ### What this book is for
 
-Volume I answers **what** language models are and **how to begin** using them responsibly. *From Prompts to Systems* answers **how to turn that familiarity into practice you can defend**: choosing approaches (prompt vs. retrieval vs. fine-tuning), **iterating with data**, **measuring quality**, **wiring models into software**, and **operating** them with costs, failures, and teams in mind.
+Volume I answers **what** language models are and **how to begin** using them responsibly. *From Prompts to Systems* answers the follow-on questions that arise as soon as you try to do something serious with them:
 
-If you have ever watched a **demo** land in a meeting and then watched **production** quietly fall over on latency, logging, or a silent model upgrade, you already know why this book exists.
+How do I choose between prompting, retrieval, and fine-tuning for my use case? How do I measure whether my feature is working? How do I build a prompt library that doesn't rot? What do I actually log? How do I keep costs from growing unexpectedly? How do I stay out of trouble when the model starts behaving differently after an update?
 
-The emphasis is **applied**: fewer proofs, more **decision patterns**—when a longer prompt beats a pipeline change, when evaluation should block a release, how to structure an API layer so you can swap models later. The goal is that after this volume you can own an LLM-powered feature from prototype to something your team can maintain—and know what Volume III will unpack if you need to go deeper on training, safety science, or scale.
+The emphasis is **applied**: fewer proofs, more decision patterns. When does a longer prompt beat a pipeline change? When should evaluation block a release? How do you structure an API abstraction layer so you can swap models later without rewriting everything?
 
-### How this volume is organized
+The goal is that after this volume you can own an LLM-powered feature from prototype to something your team can maintain — and you understand the decisions well enough to defend them.
 
-The outline groups material into **pillars** that mirror real projects: **understanding what you are shipping**, **designing prompts and interactions**, **adapting behavior** (data, retrieval, light fine-tuning), **evaluating and monitoring**, **building integrations**, and **shipping responsibly**. Themes like **evaluation** and **safety** appear in more than one part because they are both design-time and runtime concerns—the same theme at different altitudes, not repetition for its own sake.
+### The arc of this book
 
-Chapters are written to support **hands-on progression**: you can draft exercises (small apps, eval sets, prompt libraries) per part even before the prose is final.
+**Part I — Mental models and the model lifecycle.** The difference between a demo and a product, how training stages show up in model behavior, how to read a model card and choose a model, and how context and memory actually work in a system you build.
 
-### Prerequisites and suggested use
+**Part II — Prompting as engineering.** Prompts are not vibes — they are versioned interfaces. This part covers prompt structure, iteration, debugging failure modes, and the UX of features that stream, fail gracefully, and get reviewed by humans.
 
-You should be comfortable using at least one **chat or API** interface, reading **JSON**-shaped API responses, and thinking in terms of **inputs, outputs, and failure cases**. Light scripting (e.g. Python or JavaScript) will help for later chapters; where code is essential, the book can stay pseudocode-first.
+**Part III — Data, retrieval, and adaptation.** Not every problem is a prompt problem. When to retrieve vs. prompt vs. fine-tune, how RAG actually works end-to-end, how to curate data for adaptation, and how to use tool/function calling safely.
 
-Use the outline as a **manuscript contract**: merge or split chapters as your teaching style evolves. Keep implementation notes, vendor-specific quirks, and bibliography in **Notes** or sidecar files so the main text stays durable.
+**Part IV — Evaluation, quality, and safety in practice.** You ship what you measure. Defining metrics, building golden test sets, regression testing when models update silently, and layered safety architecture for product contexts.
+
+**Part V — Systems: APIs, deployment, and operations.** Abstraction layers, observability, cost and rate limit management, and the security basics that every LLM application needs.
+
+**Part VI — Teams, ethics, and the path forward.** Cross-functional roles, documentation, responsible deployment at an intermediate level, and the bridge to Volume III.
+
+### How to use this book
+
+The parts build on each other but can be used as standalone references. If you are in the middle of building something, jump to the part most relevant to your current problem. The *Try it* sections at the end of each part are designed for your actual project, not hypothetical exercises.
 
 ---
 
 ## Detailed outline
-
-Each link below opens a **draft part**—introduction, contents table, full chapter prose, and chapter takeaways—not only a bullet outline.
 
 ### Part I — Mental models and the model lifecycle
 
@@ -66,73 +85,63 @@ Each link below opens a **draft part**—introduction, contents table, full chap
 
 ## Notes
 
-This section collects **optional material** for Volume II: sample prompts, a reading list, a **glossary export**, an **exercise index**, optional **figures**, and accessibility notes. It does not replace the parts.
-
 ### Accessibility
 
-Part files use **tables** for “Contents of this part.” Each part also includes a **plain list** mirroring the table for readers or tools that do not render tables well.
+Every part file includes both a **table** and a **plain list** version of the contents for environments that do not render tables.
 
 ### Exercise index (*Try it* sections)
 
-The *Try it* prompts are meant to be **concrete and slightly cheeky** where helpful—designed to surface real tradeoffs on your own stack, not to grade you.
+| Part | Rough focus |
+|------|-------------|
+| I | Playground vs product checklist; read a model card |
+| II | Version a prompt template; debug one real failure |
+| III | RAG vs prompt decision for your use case; tool schema |
+| IV | Define one metric; build a 3-case golden set |
+| V | Sketch an API abstraction; define log policy |
+| VI | RACI for one feature; Volume III preview |
 
-| Part | File | Rough focus |
-|------|------|-------------|
-| I | [part-i](from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md) | Playground vs product; read a model card |
-| II | [part-ii](from-prompts-to-systems-part-ii-prompting-as-engineering.md) | Prompt template; debug one failure |
-| III | [part-iii](from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md) | RAG vs prompt decision; tool contract |
-| IV | [part-iv](from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md) | Define one metric; golden test idea |
-| V | [part-v](from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) | Sketch an API envelope; what to log |
-| VI | [part-vi](from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md) | RACI snippet; Volume III preview |
+### Glossary (Volume II core terms)
 
-**Exercise index (plain list):** Part I — product vs demo, model card · Part II — template + debug · Part III — RAG vs prompt, tools · Part IV — metric, golden tests · Part V — API, observability · Part VI — team handoff, frontier preview.
+- **RAG (Retrieval-Augmented Generation)** — Fetching relevant chunks of text into context before generation, so answers can be grounded in supplied documents rather than the model's training memory alone.
+- **Golden set** — A fixed set of inputs (and expected properties) used to detect regressions when prompts or models change.
+- **Model card** — A structured document describing a model's intended use, training data, known limitations, and evaluation results. Read before committing to a model in production.
+- **Tool / function calling** — The model emits structured calls (usually JSON) to bounded functions your application implements. The model does not execute code; it generates the call, and your code executes it.
+- **Prompt injection** — User or untrusted external content that manipulates the model into bypassing system instructions or misusing tools. A security concern for any system that processes untrusted input.
+- **Sycophancy** — A tendency for the model to agree with or validate the user's position regardless of accuracy. A post-training failure mode that can undermine reliability.
+- **Latency** — The time from sending a request to receiving the complete response. Critical for user experience; affected by model size, context length, and infrastructure.
 
-### Sample prompts (for APIs and eval)
+### Sample prompts
 
-1. **System prompt skeleton.** “You are [role]. Reply in [format]. If unsure, say what is missing. Never invent [constraint].”
+1. **System prompt skeleton.** "You are [role]. Reply in [format]. If you are unsure about something, say what is missing rather than guessing. Never [constraint]."
 
-2. **Eval rubric.** “Score the assistant answer 1–5 on correctness, helpfulness, and safety. Give one sentence of justification each.”
+2. **Eval rubric.** "Score this assistant response 1–5 on correctness, helpfulness, and format adherence. Give one sentence of justification for each score."
 
-3. **RAG grounding.** “Using only the provided CONTEXT blocks, answer the question. If CONTEXT is insufficient, say so.”
+3. **RAG grounding instruction.** "Using only the provided CONTEXT sections below, answer the question. If the context does not contain enough information to answer, say so explicitly rather than guessing."
 
-4. **Regression check.** “Given INPUT and EXPECTED_SHAPE, does OUTPUT parse as valid JSON with keys […]?”
+4. **Regression check.** "Given this INPUT and EXPECTED_SHAPE, does the OUTPUT satisfy all required properties? List any violations."
 
-### Glossary export (Volume II core)
+### Optional figures
 
-- **RAG (retrieval-augmented generation)** — Fetching relevant documents (or chunks) into **context** before generation, so answers can **ground** in supplied text.  
-- **Golden set** — A fixed **evaluation** set of inputs (and often reference outputs) used to detect **regressions** when models or prompts change.  
-- **Model card** — A structured description of a model’s **intent**, **data**, **limitations**, and **evaluation**—read before you commit.  
-- **Tool / function calling** — The model emits **structured calls** (e.g. JSON) to bounded functions your app implements; not arbitrary code execution.  
-- **Prompt injection** — User or untrusted content that **manipulates** the model into bypassing instructions or **misusing** tools—**trust boundaries** matter.
-
-### Reading list (short)
-
-- Provider **API documentation** and **safety** guides for the stack you ship.  
-- Papers or posts on **RAG** architecture and **eval harnesses** once you need depth—*From Models to Frontiers* points to research-scale material.  
-- *From Tokens to Understanding* (Volume I) for vocabulary; [*From Models to Frontiers*](../from-models-to-frontiers/from-models-to-frontiers.md) (Volume III) for training, scale, and frontier topics.
-
-### Optional figures (Mermaid — for HTML/PDF)
-
-**Stack: app → orchestration → model**
+**Stack: application → orchestration → model**
 
 ```mermaid
 flowchart TB
-  UI[Application / UI] --> ORCH[Orchestration]
+  UI[Application / UI] --> ORCH[Orchestration layer]
   ORCH --> API[Model API]
   ORCH --> RET[Retrieval / tools]
   RET --> STORE[(Data stores)]
 ```
 
-**Eval loop**
+**Evaluation loop**
 
 ```mermaid
 flowchart LR
-  P[Prompt + model] --> O[Output]
+  P[Prompt + model version] --> O[Output]
   O --> M{Metrics / human review}
   M -->|fail| P
   M -->|pass| Ship[Ship / monitor]
 ```
 
-### Chapter notes
+---
 
-_Add your own manuscript notes, ticket links, and per-environment quirks below._
+*Start reading: [Part I — Mental models and the model lifecycle](from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md)*

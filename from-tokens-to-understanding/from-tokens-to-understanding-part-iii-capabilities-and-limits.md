@@ -6,7 +6,9 @@
 
 ---
 
-You now have a workable picture of **how** a model generates text. This part turns outward: **what these systems are genuinely useful for**, where they **fail or mislead**, how **social bias** shows up in outputs, and what **speed, money, and access** mean in practice. The aim is proportion: neither hype (“it can do anything”) nor blanket dismissal (“it is only autocomplete”). You leave ready for Part IV’s hands-on prompting—and for Volume II’s deeper treatment of evaluation and deployment.
+You now have a workable picture of **how** a model generates text. This part turns outward: **what these systems are genuinely useful for**, where they **fail or mislead**, how **bias** shows up in outputs, and what **cost, speed, and access** mean in practice.
+
+The aim is proportion. Neither hype ("it can do anything") nor blanket dismissal ("it is only autocomplete") serves you well. You leave this part ready for the hands-on work in Part IV — and with the calibrated skepticism that makes the tools genuinely useful rather than naively trusted.
 
 ---
 
@@ -16,133 +18,244 @@ You now have a workable picture of **how** a model generates text. This part tur
 
 | | Chapter | What you will take away |
 |---|--------|-------------------------|
-| **1** | What LLMs tend to do well | Real strengths—without mistaking fluency for reliability |
+| **1** | What LLMs tend to do well | Real strengths — with an honest account of why they hold |
 | **2** | Hallucinations, mistakes, and calibration | Why errors look credible; how to probe and verify |
-| **3** | Bias, stereotypes, and fairness | Where skew comes from; why “fixing” it is hard |
+| **3** | Bias, stereotypes, and fairness | Where skew comes from; why "fixing" it is hard |
 | **4** | Speed, cost, access, and the environment | Who can use what, why price varies, a sober footprint note |
 
 **Contents (plain list — same as table):**
 
-1. What LLMs tend to do well — strengths without mistaking fluency for reliability.  
-2. Hallucinations, mistakes, and calibration — credible errors; verification.  
-3. Bias, stereotypes, and fairness — skew; why fixes are hard.  
-4. Speed, cost, access, and the environment — pricing, access, energy in proportion.
+1. What LLMs tend to do well — strengths tied to training data patterns.
+2. Hallucinations, mistakes, and calibration — credible errors; verification habits.
+3. Bias, stereotypes, and fairness — skew; why fixes are incomplete.
+4. Speed, cost, access, and the environment — pricing, access gaps, energy in proportion.
 
 ---
 
 ## Chapter 1 — What LLMs tend to do well
 
-**Which task would you give a tireless intern who reads fast but sometimes lies?** Drafts, outlines, rephrasing, format—**not** sole responsibility for your taxes.
+**Which task would you give a tireless colleague who reads fast, writes fluently, and sometimes confidently states something completely wrong?** Not your final legal brief. But your first draft, your brainstorm list, your rephrased email — those are fine. The key to using language models effectively is matching the task to the capability, which requires actually understanding what the capability is.
 
-Large language models are not equally good at every task. Their strengths line up with **pattern-rich text**: language, format, and shallow structure that appears often in training data. Knowing the sweet spots helps you **delegate** the right work to the model—and reserve human judgment for the rest.
+Large language models are not equally good at everything. Their strengths cluster around tasks that are **pattern-rich in text**: language, format, shallow structure, and information that appears frequently in the training corpus. Knowing the shape of these strengths lets you delegate the right work and reserve human judgment for the rest.
 
-### Drafting, brainstorming, and rephrasing
+### Drafting, rephrasing, and brainstorming
 
-When you need **many candidate wordings**—email tones, headlines, outlines, alternate explanations—a model can accelerate iteration. It is often strong at **following format**: bullet lists, tables (as text), simple templates, “make this shorter,” “make this more formal.” That is **stylistic and structural** help, not a guarantee that the *content* is accurate for your domain.
+The single most reliable use of a language model is generating candidate text — not finished text, but starting points that you then edit, select from, or discard.
 
-### Format-following and light structure
+Ask for three different tones for the same email, and you get three; pick the one that fits and edit from there. Ask for ten headline options for a blog post and you get ten; two of them will be genuinely useful. Ask for an outline before writing and you get a skeleton to rearrange.
 
-Models that have seen huge amounts of code and markup often produce **plausible-looking** snippets: JSON-shaped objects, small functions, configuration examples. Treat these as **sketches** to be checked in a compiler, linter, or runtime. The same goes for legal or medical *style*: the format may look right while the substance is wrong.
+**Why this works:** Patterns of tone, structure, and phrasing appear constantly in training data. The model has seen thousands of formal-to-informal transformations, thousands of bullet lists derived from paragraphs, thousands of headlines for thousands of topics. It can generate plausible variations at a speed no human can match.
 
-### Simple coding and shell sketches
+**The limits:** Faster drafts are not more accurate drafts. "The model wrote it" is not a claim about truth or fitness for purpose — it is a claim about text generation. You remain responsible for the substance.
 
-For **boilerplate**, common APIs, and debugging hints (“what might this error mean?”), LLMs can save time—especially when you already know enough to **spot** mistakes. They are weaker when the problem is **novel**, requires **exact library versions**, or depends on **unstated constraints** in your codebase.
+### Explaining and teaching
 
-### Multilingual exposure (with caveats)
+Language models are often useful for getting a plain-language explanation of something you do not understand. "Explain how a neural network learns" in ten different ways, at ten different levels of assumed knowledge — the model can do all of them.
 
-Training data includes many languages, so models can **translate**, **summarize**, or **chat** in languages beyond English—unevenly. High-resource languages often work better; low-resource or dialectal settings may see more errors or **cultural blind spots**. Do not assume parity with a professional translator or a fluent human editor.
+**Why this works:** Training data includes enormous amounts of pedagogical text: textbooks, tutorials, explainer articles, Stack Overflow answers, forum threads where experts answer novice questions. The model has learned the shape of "here is a concept explained simply" from millions of examples.
+
+**The limits:** The explanation may be fluent, clear, and subtly wrong. It may omit the crucial caveat that changes the whole picture. It may use an analogy that breaks down in exactly the case you care about. Always check explanations against primary sources when the stakes matter.
+
+### Editing and format transformation
+
+Converting prose to bullet points, bullet points to prose, tables to descriptions, code to documentation — these structural transformations are reliably useful tasks. The model handles format with high consistency.
+
+**Why this works:** Format patterns — markdown, structured lists, JSON shapes, table structures — appear so frequently in training data that the model has a very firm statistical grip on them.
+
+**The limits:** It transforms form, not substance. A factually confused paragraph reformatted into bullet points produces clearly labeled confusion.
+
+### Writing code sketches and debugging hints
+
+For common programming tasks — boilerplate, standard library usage, common API patterns, explaining what an error message might mean — language models are genuinely useful, especially for developers who already know enough to evaluate the output.
+
+**Why this works:** Code represents a large fraction of training data for modern models. The patterns of "here is an error message, here is what it likely means" are well-represented.
+
+**The limits:** The model does not run your code. It does not know your specific library versions, your environment, or your constraints. Treat code suggestions as sketches that require testing, not as solutions that require only copying. For novel problems or tight correctness requirements, the model is much less reliable.
+
+### Multilingual assistance (with significant caveats)
+
+Translation, summarization, and basic conversation in many languages are within reach. High-resource languages (English, Spanish, French, German, Chinese, Japanese) generally work better than low-resource ones.
+
+**Why this works:** The internet, and therefore the training data, includes text in many languages, creating multilingual competence as a side effect.
+
+**The limits:** Performance degrades sharply for low-resource languages, regional dialects, and minority languages. "Works in Spanish" does not imply "works in Nahuatl" or even in every Spanish-speaking regional register. Cultural nuance is harder than linguistic translation. Do not rely on the model for languages you cannot evaluate the output in.
 
 ### The recurring theme
 
-These strengths are **assistive**. They are most valuable when a human—or a separate verification step—can catch errors before they matter.
+All of these strengths are **assistive and draft-quality**. They accelerate iteration. They generate options. They handle the mechanical work of formatting and phrasing so you can focus on substance and judgment. They become most valuable when a human — or a deliberate verification step — can catch errors before they matter.
 
-*Friction:* teams ship faster on **language-shaped** tasks and forget that “faster draft” does not mean “faster truth.” The mistake is organizational: skipping the review step because the **Slack message about the draft** arrived quickly.
+*Friction:* The organizational risk is not that the model fails obviously. It is that the model succeeds fastwhere you expected it to fail — so teams skip the review step because the output arrived quickly and looked polished. Fast and polished is not the same as accurate and safe.
 
 ---
 
 ## Chapter 2 — Hallucinations, mistakes, and calibration
 
-*Anchor in one image:* a model might hand you a paper with a **perfectly formatted** bibliography where **half the titles do not exist**. The failure is not sloppy formatting—it is **confident specificity without grounding**.
+**Picture a bibliography in a perfectly formatted academic paper where half the cited studies do not exist.** The author names are plausible. The journal names are almost right. The titles are exactly the kind of titles those journals would publish. But the actual papers — the ones with those exact titles, by those exact authors, in those exact journals — are not real. This is the hallucination problem, and it is not a rare edge case.
 
-A **hallucination** in common usage means: the model asserted something **specific** (a fact, a citation, a number) that is **false or unsupported**—often while sounding confident. Understanding *why* this happens keeps you from “prompt engineering” your way to perfect truth.
+### What hallucination actually means
 
-### Confident errors
+In everyday use, a **hallucination** is a specific, confident, fluent output that is factually false or unsupported. The word comes loosely from psychology — an experience that feels real but has no external basis — but in the LLM context it just means: **the model stated a specific thing as if it were true, and it was not.**
 
-The training objective rewards **plausible** continuation. Explanations in the training data often sound sure. So the model can produce **well-phrased nonsense**: fake studies, wrong dates, made-up URLs, or subtle numerical slips. This is not an occasional bug; it is a **structural** risk of unconstrained generation.
+This is distinct from vagueness, uncertainty, or disagreement. A model saying "I'm not certain, but I believe…" is hedging. A model saying "The study by Kovacs et al. (2019) found that…" and inventing the study is hallucinating.
 
-### When to verify from another source
+Hallucinations are not rare. They are a **structural property** of how these models work. The training objective rewards plausible continuation, not verified fact. There is no internal fact-checker.
 
-Verify **whenever** mistakes would hurt someone: health, money, law, reputation, safety. Verify **before** you repeat a claim in public or in code you ship. Primary sources, official documentation, and subject-matter experts still matter. The model is a **starting point**, not an authority.
+### Four categories where hallucination is most common
 
-### Asking for uncertainty (and its limits)
+**1. Specific numbers and statistics.** Populations, percentages, dates, measurements. The model knows that questions about numbers should be answered with numbers, and it will produce a number — even when it does not have reliable data.
 
-You can ask the model to **flag uncertainty**, **list assumptions**, or **avoid inventing citations**. That sometimes helps; it is not reliable. The model can say “I might be wrong” and still be wrong, or sound tentative while fabricating. **Prompting** cannot replace **checks** on high-stakes facts.
+**2. Citations and references.** Ask for academic citations and you are likely to get plausible-looking but nonexistent papers, articles, or rulings. The model knows what citations look like, and it will produce the right shape — with wrong content.
 
-### Citations and “look it up”
+**3. Details about people and organizations.** Job titles, publication histories, biographical facts about real people, details about companies. The model knows that articles about people include these details, so it fills them in.
 
-If you ask for references, you may get **plausible-looking** titles and authors that do not exist or do not say what the model claims. Unless the system is **wired to retrieval** (search, databases) and you trust that pipeline, treat citations as **suggestions to verify**, not proof.
+**4. Events near or after the training cutoff.** The model may generate plausible-sounding details about recent events it has no actual data on.
 
-### A useful habit
+### Why this happens
 
-Separate **form** from **substance**. The model may produce beautiful structure around empty or false content. Your job is to supply **substance**—or to validate it elsewhere.
+Walk through the mechanism. You ask: "What was the population of Lagos in 2022?"
 
-**Summary line:** hallucination is confident-sounding error; prompts alone do not fix it; verify when it matters, and never trust ungrounded citations.
+The model has seen thousands of sentences of the form "The population of [city] in [year] was [number]." It knows the shape of this answer. It picks a number that fits that pattern — possibly a real number it saw, possibly a blend of numbers from different years, possibly a confident extrapolation. It has no flag that fires to say "I don't have reliable data for this specific fact." It just produces the most plausible continuation of the question-answer pattern.
+
+The confident tone is not evidence of accuracy. It is evidence of how many confident-sounding answers appear in the training data.
+
+### The verification habit
+
+For any output where factual accuracy matters:
+
+1. **Separate form from substance.** The model may produce beautiful structure around empty or false content. A well-formatted argument is not a correct argument.
+2. **Check specific claims.** Numbers, names, dates, citations — any specific claim that would be embarrassing if wrong should be verified from a primary source.
+3. **Never treat model citations as real.** If you want citations, find them yourself through a library database or search engine. Use the model to identify *what to look for*, not to provide the reference itself.
+4. **Ask for uncertainty signals, but do not rely on them.** Prompting the model to flag things it is unsure about sometimes helps. But the model can also say "I'm fairly confident" about something it is wrong about, and can hedge about things it actually knows. Prompting helps at the margins; it does not solve the structural problem.
+
+*Memorable detail:* A model that is wrong 5% of the time on factual claims sounds reliable until you realize that a 1,000-word document contains dozens of factual claims — and some of them may be wrong in ways that look completely convincing.
+
+*Direct address:* If you are using a language model for anything involving health, legal advice, financial decisions, or any domain where being wrong hurts someone — treat every specific claim as a hypothesis to verify, not a fact to cite.
 
 ---
 
-## Chapter 3 — Bias, stereotypes, and fairness (introduction)
+## Chapter 3 — Bias, stereotypes, and fairness
 
-Language models learn from **human-generated** text—books, forums, code, social media. That corpus encodes **biases** of many kinds: stereotypes about groups, uneven representation, historical prejudice, and gaps in whose voices were written down. The model can **reproduce** or **amplify** those patterns, even when later tuning tries to suppress the worst outputs.
+Language models learn from human-generated text. That corpus encodes centuries of human bias: stereotypes about demographic groups, uneven representation of different communities' voices, historical prejudice baked into what was written down and what was not, and gaps in whose knowledge and perspective was digitized. The model does not learn to *understand* bias — it learns to *reproduce the patterns in text*, including the biased ones.
 
-### What “bias” means here
+### What "bias" means in this context
 
-In this chapter, **bias** means **systematic skew**: answers that favor one demographic, language variety, or worldview over others without justification; or that **erase** or **caricature** people. It is not the same as having an opinion in a debate—it is about **unfair or harmful regularities** in behavior.
+In this chapter, **bias** means **systematic skew**: outputs that favor one demographic group, language variety, or worldview over others in ways that are unjustified and often harmful. This is not the same as having a point of view on a contested issue. It is about unfair regularities: consistent under-representation, caricature, or degradation of specific groups.
 
-### Harmful or skewed outputs
+### Three concrete examples
 
-You may see **stereotyping**, **denigration**, or **overconfidence** about groups the training data treated badly. Safety layers in products **reduce** but do not **eliminate** these failures; adversarial prompts, edge cases, and multilingual settings still surface problems.
+**Demographic defaults in generated scenarios.** If you ask a model to write a story about a doctor, it may default to a male doctor. If you ask for a story about a nurse, it may default to a female nurse. These defaults reflect the statistical distribution of how doctors and nurses are described in text — and reinforcing those defaults in AI outputs compounds the representational problem.
 
-### Why “fixing” this is an open challenge
+**Dialect quality judgments.** Language models trained primarily on edited, formal, standard English prose may evaluate or continue African American Vernacular English (AAVE) or other dialects as lower quality, produce corrections when none were requested, or treat non-standard grammar as errors rather than as valid linguistic variation. This is not a deliberate design decision — it is the model reflecting patterns in what "good writing" looks like in its training data.
 
-**Technical** fixes—filtering data, fine-tuning on “good” answers, classifiers—help but trade off with other goals (accuracy, nuance, free expression) and can **shift** bias rather than remove it. **Social** questions—who decides what is fair, in which culture—do not have single engineering answers.
+**Western-centric cultural defaults.** Concepts of family structure, political systems, professional norms, food, clothing, and historical events will skew toward Western European and American perspectives in models trained on English-dominant internet text. A question about "traditional marriage" will produce an answer shaped by that corpus. A question about historical events may center perspectives that dominated the text sources.
 
-Later volumes return to **evaluation**, **alignment**, and **governance**. For now: **notice** when outputs feel off; **do not** treat the model as a neutral arbiter of people or history.
+### How bias enters the system
 
-*Direct address:* if a screenshot “proves” the model is unbiased because it refused one slur, you have tested **marketing**, not **society**.
+The pipeline has three stages where bias can compound:
+
+**Training data.** If the data over-represents certain groups, perspectives, and time periods, the model learns those patterns more deeply. What is not well-represented is learned less reliably.
+
+**Training objective.** The next-token prediction objective does not distinguish between "the text accurately represents group X" and "this is how X is most commonly described in text." Both generate the same training signal.
+
+**Post-training tuning.** Preference tuning and safety filtering reduce some harmful outputs — but they can also shift bias rather than eliminate it, introduce new inconsistencies (over-refusing for some groups, under-refusing for others), or suppress surface expressions of bias while leaving deeper patterns intact.
+
+### Why "fixing" this is an open challenge
+
+Technical mitigations help at the margins: filtering training data for known harmful content, fine-tuning on more representative examples, using classifiers to catch problematic outputs. But these approaches involve difficult tradeoffs — between accuracy and fairness, between free expression and harm reduction — and they can shift bias without removing it.
+
+The deeper problem is that "fair" is not a single, technically specified standard. It requires answering questions like: whose representation counts, by what measure, according to whose cultural standards? Those are social and political questions that engineering alone cannot resolve.
+
+*Direct address:* Do not treat the model as a neutral arbiter of anything involving people, history, or culture. It is not neutral. Nothing trained on human text can be.
+
+For high-stakes outputs — decisions that affect hiring, lending, medical triage, content moderation — bias testing against specific demographic groups should be a requirement, not an afterthought.
 
 ---
 
 ## Chapter 4 — Speed, cost, access, and the environment
 
-Capability is not the only axis. **Latency** shapes user experience; **price** shapes who can build what; **access** shapes who benefits from the technology. A short, honest look avoids both **mystery** and **moral theater**.
+These are not secondary concerns. They are the constraints that shape **who gets to use these tools**, **what they can do with them**, and what real-world resources their use consumes. A short, honest account is more useful than either mystery or moral theater.
 
-### Free tiers, APIs, and “bigger costs more”
+### Free tiers, paid APIs, and what "bigger" costs
 
-Many vendors offer **free** or **cheap** tiers for small usage. Serious volume usually means **paid APIs** or **enterprise** contracts. Pricing is often **per token** (Part II): longer prompts and longer answers cost more. **Larger** models generally cost more per token than **smaller** ones; **long-context** or **premium** features may carry a surcharge.
+Most providers offer a free or low-cost tier for casual use. Serious volume — building a feature, running evaluations, processing large documents — usually means paid API access or an enterprise contract.
 
-*One memorable detail:* a “short” user question can become expensive if your pipeline **keeps stuffing** ten pages of retrieved text into the context every turn—you pay for every token the model **reads**, not only the clever sentence at the end.
+**Pricing is almost always per token**, for both input and output. The rough intuition:
 
-Rough intuition: you pay for **compute** the provider spends to serve you—plus their margin, support, and compliance overhead.
+- A 1,000-word document is approximately 1,300 tokens.
+- A mid-tier model API might charge $0.003–$0.015 per 1,000 input tokens.
+- A frontier model might cost 5–10x more.
+- Output tokens are often priced higher than input tokens.
+
+So a single 500-word answer to a 200-word question, on a mid-range model, costs roughly a fraction of a cent. One million such exchanges costs thousands of dollars. That arithmetic matters quickly when you are building a product.
+
+**Larger models cost more per token** because they require more compute to run. The tradeoff is not always worth it — for many tasks, a smaller, cheaper model is adequate, and the cost difference allows 10x more queries for the same budget.
+
+*Memorable detail:* A simple-looking product can become unexpectedly expensive if the system prompt is 2,000 tokens, retrieval injects another 3,000 tokens of documents per request, and you have 100,000 users per day. You pay for every token the model reads — not just the clever sentence at the end of the prompt.
 
 ### Who can access what
 
-Access varies by **region**, **payment method**, **organization type**, and **policy** (e.g. age limits, acceptable-use rules). Open-weight models and local inference change the picture: more **control** and **privacy** for those with the **hardware** and skills to run them—still not equally distributed.
+Access to frontier AI tools is not uniform. Several axes constrain it:
 
-Do not assume everyone has the same chatbot, the same model version, or the same legal context.
+**Geography and payment infrastructure.** Many frontier model providers are based in the United States and Europe. Payment via credit card or certain banking systems is required. Users in countries with limited credit card access or under payment-system restrictions face barriers that are invisible from within those markets.
 
-### Environment and energy (in proportion)
+**Language coverage.** High-resource languages work better. Users working in lower-resource languages — even in languages spoken by hundreds of millions of people — may see significantly worse quality, more hallucinations, and poorer cultural fit.
 
-Training large models from scratch uses **a lot** of energy; **inference** (each query) uses less per request but adds up at scale. Exact numbers depend on **hardware**, **utilization**, and **electricity mix**; beware headlines that compare “one chat” to exotic units without context.
+**Hardware requirements.** Open-weight models that run locally require capable hardware. A laptop with a current GPU is sufficient for smaller models; larger ones require dedicated workstations or cloud compute, which costs money and technical expertise.
 
-The balanced stance for this book: **awareness**, not performative guilt or greenwashing. Efficiency matters; so do **useful** applications and **who** gets to define tradeoffs.
+**Organizational access.** Enterprise agreements with privacy guarantees, dedicated capacity, and regulatory compliance (like HIPAA in healthcare or GDPR compliance in Europe) are available — at prices that favor large organizations over individuals and small nonprofits.
+
+None of this is a reason to avoid these tools. It is a reason to be honest about who "we" includes when people say "we all have access to this."
+
+### Energy and environment: a proportionate view
+
+Training a frontier model from scratch uses significant energy — comparable in some estimates to the annual electricity consumption of dozens of homes, or hundreds of round-trip transatlantic flights. This is a legitimate environmental concern.
+
+Inference — each individual query — is much cheaper per request, but adds up at scale. A billion daily queries across a major consumer product is a non-trivial compute load.
+
+The honest environmental stance for this book is: **awareness and proportionality, not performative guilt or greenwashing**. Use these tools where they provide genuine value. Support providers who are transparent about their energy use and working toward lower-carbon infrastructure. Avoid treating a one-time training cost as if it is incurred per query, and avoid treating per-query costs as negligible when running at scale.
+
+### Quick takeaway
+
+- Pricing is per token; larger models cost more; system prompts and retrieved documents contribute to cost.
+- Access is uneven by geography, language, hardware, and organizational capacity — this matters for equity.
+- Energy use from training is real; per-query use adds up at scale; proportionality beats theater in both directions.
 
 ---
 
 ## Try it
 
-1. **Hallucination probe.** Ask the model for a **very specific** fact (invent a constraint: “the exact founding year of a small organization you can look up”). Verify online. If wrong, note the **tone** of the wrong answer—confident or hedged? Bonus: try asking it to “cite sources” and watch whether the **citations** verify.
+### Exercise 1 — Hallucination probe
 
-2. **Strengths vs limits.** Pick one task the model does **well** for you (e.g. rewrite a paragraph) and one it does **poorly** (e.g. exact arithmetic). Write one sentence each: *why* the difference, in terms of this part—no jargon required, but **no** generic “AI is not perfect.”
+Ask the model a question that has a specific, checkable answer — something like "Who won the [obscure award] in [specific year]?" or "What is the exact founding date of [small organization]?"
+
+Find the actual answer through a search engine or official source. Compare:
+- Was the model right or wrong?
+- How did it sound? Confident or hedged?
+- If it was wrong, was the wrong answer *plausible*? Would you have caught it without checking?
+
+Bonus: ask the model to "cite sources" for its answer and check whether the citations are real.
+
+### Exercise 2 — Strengths vs. limits
+
+Pick one task the model does well for you and one it does poorly. Write one sentence for each explaining *why* the difference exists in terms of what you learned in Chapter 1 (pattern richness in training data). Avoid generic explanations like "AI is not perfect" — connect it specifically to the mechanism.
+
+### Exercise 3 — Observe a bias default
+
+Ask the model to write a short paragraph about a professional — a doctor, a lawyer, an engineer, a nurse, a teacher — without specifying any demographic details.
+
+What defaults did it choose? Now ask again, explicitly specifying a demographic that goes against the common pattern (a female engineer, a male nurse, a young retiree). Does the model handle it naturally or introduce awkwardness?
+
+You are not grading the model here. You are observing what the statistical defaults in training data look like.
+
+### Exercise 4 — Cost intuition
+
+Find the pricing page for a model API you might use. Calculate the approximate token cost for a workflow you actually do or are considering:
+
+- How many input tokens per request (system prompt + context + question)?
+- How many output tokens per response?
+- How many requests would you run per day or month?
+
+What is the estimated cost? Does that change which model you would pick?
 
 ---
 

@@ -6,7 +6,9 @@
 
 ---
 
-Part I gave you **orientation**: vocabulary, history, and a clear line between fluency and truth. This part turns to **mechanics**—still without equations, but concrete enough that invoices, error messages, and model announcements make sense. You will see how raw text becomes **tokens**, how the model turns a prefix into **probabilities over the next token**, how **training and later tuning** shape behavior, and why **context length** is both a superpower and a hard ceiling.
+Part I gave you **orientation**: vocabulary, history, and a clear line between fluency and truth. This part turns to **mechanics** — still without equations, but concrete enough that invoices, error messages, and model announcements start making sense. You will see how raw text becomes **tokens**, how the model turns a prefix into a **next token**, how **training and tuning** shape the model's behavior, and why **context length** is both a superpower and a hard ceiling.
+
+Everything in this part connects back to one idea: the model is an extraordinarily sophisticated pattern-completion engine. Understanding *how* that engine runs explains why it does the things that surprise you — good and bad.
 
 ---
 
@@ -16,148 +18,311 @@ Part I gave you **orientation**: vocabulary, history, and a clear line between f
 
 | | Chapter | What you will take away |
 |---|--------|-------------------------|
-| **1** | Text as tokens | Why “token” is the unit of cost and memory, not always “word” |
+| **1** | Text as tokens | Why "token" is the unit of cost and memory, not always "word" |
 | **2** | Prediction: the next piece of text | Next-token prediction, randomness, and misplaced confidence |
-| **3** | Training and adaptation in one picture | From web-scale pretraining to chatty assistants—in one arc |
-| **4** | Context windows and memory | What fits “in view,” and what to do when it does not |
+| **3** | Training and adaptation in one picture | From web-scale pretraining to chatty assistants — in one arc |
+| **4** | Context windows and memory | What fits "in view," and what to do when it does not |
 
 **Contents (plain list — same as table):**
 
-1. Text as tokens — cost and limits in tokens, not always words.  
-2. Prediction: the next piece of text — sampling, temperature, confidence.  
-3. Training and adaptation in one picture — pretraining to chatty assistants.  
-4. Context windows and memory — finite “view,” forgetting in long chats.
+1. Text as tokens — cost and limits in tokens, not always words.
+2. Prediction: the next piece of text — sampling, temperature, confidence.
+3. Training and adaptation in one picture — pretraining to chat assistants.
+4. Context windows and memory — finite "view," forgetting in long chats.
 
 ---
 
 ## Chapter 1 — Text as tokens
 
-**Ever opened a bill and wondered how “hello world” became hundreds of units?** On many systems, those units are **tokens**, not words—and the mismatch between human intuition and provider accounting causes real arguments.
+**Have you ever paid for something and not known what the unit of measurement was?** Buying data by the "megabyte" used to confuse everyone. Buying LLM capacity by the "token" is doing the same thing to a new generation of users. If you do not know what a token is, you will misread your bill, misunderstand context limits, and occasionally get strange behavior from the model when it encounters text you would not expect to be unusual.
 
-Models do not read text the way humans do. They read **tokens**: pieces produced by a fixed procedure called a **tokenizer**. Getting comfortable with tokens saves you from surprises on your bill and from misunderstanding limits in the UI.
+A **token** is the model's atomic unit of text. Not a character, not a word — a token. It is a fragment produced by a specific procedure called a **tokenizer**, and the exact fragments depend on the tokenizer used during training.
 
-### Words, subwords, and strange splits
+### How tokenization works
 
-In English, a token is sometimes a whole word (`"hello"`), sometimes a fragment (`"ing"`, `"un"`). Rare or long words are often cut into several tokens. Punctuation and spaces usually cost tokens too; a newline may be its own token. Different products may use different tokenizers, so the **same sentence** can tokenize slightly differently across systems.
+The tokenizer's job is to convert any text into a sequence of integer IDs from a fixed vocabulary — often 50,000 to 100,000 entries. Each ID points to a piece of text that the model has learned to recognize. The model never sees your raw text; it sees a sequence of numbers representing those pieces.
 
-*Memorable detail:* a long technical identifier like `getUserSessionConfig` might eat **more** tokens than the short sentence “Please log in again”—because the model has seen “please log in” on repeat, but your camelCase string is rare and gets chopped into unfamiliar pieces.
+In English, many common words map to a single token. "the," "is," "of," "and" are all one token each. But the rules get stranger quickly:
 
-That matters because **price and limits are counted in tokens**, not in words or characters.
+| Your text | Likely tokenization |
+|-----------|---------------------|
+| `playing` | `play` + `ing` (2 tokens) |
+| `unbelievable` | `un` + `believ` + `able` (3 tokens) |
+| `2024` | `2024` (1 token in most models) |
+| `getUserSessionConfig` | `get` + `User` + `Session` + `Config` (4 tokens) |
+| `Hello, world!` | `Hello` + `,` + ` world` + `!` (4 tokens — note the space is part of the word token) |
+| `…` (ellipsis) | may be 1 or 3 tokens depending on the tokenizer |
 
-### Why the unit is “token,” not “word”
+The general rule: **common sequences cost fewer tokens; rare sequences cost more**. A camelCase identifier your codebase invented will be chopped into pieces. A phrase that appears constantly in English text will often survive as one or two tokens.
 
-The tokenizer’s job is to turn any allowed text into a sequence of **integer IDs** from a finite vocabulary (often tens or hundreds of thousands of entries). The model’s first layers map those IDs to vectors the rest of the network can process. Using **subwords** keeps the vocabulary manageable: the model can represent rare words by **combining** pieces it has seen often.
+### Why subwords? The vocabulary problem
 
-You do not need to memorize how byte-pair encoding or SentencePiece work. You need the habit: **paste important text into a token counter** (many providers offer one) when length or cost matters.
+Why not just tokenize by word? Two reasons.
 
-### Tokens as the currency of limits
+First, vocabulary size. If every word form is its own token, you need a massive vocabulary — and you still cannot handle rare words, technical terms, names, or words in other languages. A subword approach keeps the vocabulary manageable: "un-" and "able" each appear in hundreds of thousands of words, so the model gets mileage from both pieces.
 
-- **Context window** (Part II, Chapter 4) is measured in tokens: how much *input* the model can attend to at once.  
-- **Output** is also generated token by token; long answers use more tokens than short ones.  
-- **API pricing** is often per million input and output tokens.
+Second, morphology. Languages like Finnish, Turkish, or German form long compound words that are trivially split into meaningful subparts. A word-level tokenizer sees one unknown word; a subword tokenizer sees a sequence of recognizable components.
 
-So “one prompt” is not one fixed price. A verbose system prompt, a huge pasted PDF, and a chain of earlier messages all **eat the same budget**.
+The tradeoff: the model must learn to reconstruct meaning from pieces. It handles this surprisingly well for common patterns, but it means that rare words and non-English text often require more tokens than you would intuitively expect.
 
-### A helpful analogy
+### Why this matters in practice
 
-Think of the tokenizer as a **reversible encoding** of text into a standard alphabet the model knows. It is not compression in the file-size sense, but it is **structured**: the model never sees raw bytes the way your editor does; it sees **IDs** that stand for learned pieces of text.
+**Cost.** API pricing is per token, not per word or character. A 750-word document is roughly 1,000 tokens in English — but that ratio shifts dramatically for code (often more tokens per character), for some languages (often more tokens per word), and for structured formats like JSON.
 
-**Where smart people stumble:** they budget for **user question** length and forget the **system prompt**, **tool outputs**, and **prior chat**—then blame “the model” when the window overflows.
+**Context limits.** The model's context window is measured in tokens. If the limit is 128,000 tokens, that sounds enormous — until your system prompt is 2,000 tokens, your chat history is 10,000 tokens, and you try to paste in a long document.
+
+**Strange model behavior.** If you have ever seen a model behave oddly on a specific word — mispronounce a rare name, trip on a technical term, or make arithmetic errors on multi-digit numbers — tokenization is often the explanation. The model is not reading "3.14159"; it is reading a sequence of tokens that may split across the decimal point in ways that make arithmetic harder.
+
+*Friction:* The most common budgeting mistake is accounting for the user's question and forgetting everything else — system prompt, tool outputs, retrieved documents, prior chat history. All of it eats tokens from the same fixed budget.
+
+*Memorable detail:* A short camelCase method name like `calculateMonthlyCompoundInterestRate` can cost more tokens than the sentence "What is compound interest?" They are the same semantic load, but one is rare text and the other is common.
+
+### A practical habit
+
+Before working with a tool that has a context limit or charges per token, **paste your text into the provider's tokenizer** (most provide one) and look at the actual count. It takes thirty seconds and will save you from unpleasant surprises.
+
+### Quick takeaway
+
+- Tokens are subword fragments, not words. Common text is cheaper; rare text costs more.
+- Cost and context limits are both measured in tokens.
+- System prompts, history, and retrieved documents all share the same token budget as your question.
 
 ---
 
 ## Chapter 2 — Prediction: the next piece of text
 
-If tokens are the atoms, prediction is the heartbeat: **one beat, one token**, repeat.
+**Imagine autocomplete — but instead of suggesting the next word on your phone keyboard, it writes the next 500 words, then 500 more, and keeps going until you tell it to stop.** That is, very roughly, what a language model does. Understanding the loop that makes this possible explains almost every behavior you will observe.
 
-At the core of autoregressive language modeling is a simple loop: given everything so far, assign a **probability** to each possible next token, **pick** one (or take the most likely), append it, and repeat. Everything else—chat tone, “reasoning,” code—is built on top of that loop.
+### The autoregressive loop
 
-### One step at a time
+At the core of a large language model is one repeated operation, called **autoregressive generation**:
 
-The model does not emit a full answer in a single gulp. It proposes **one** next token, then conditions the following step on the longer prefix—including the token it just wrote. That is why edits to **early** tokens can change **later** ones: the chain is causal.
+1. Given all the text so far (your prompt, plus any tokens the model has already generated), compute a probability distribution over every possible next token in the vocabulary.
+2. Sample one token from that distribution.
+3. Append the chosen token to the sequence.
+4. Repeat from step 1.
 
-*Pause for a one-line analogy:* it is less like printing a finished essay and more like walking a tightrope—each step depends on where your foot just landed.
+```mermaid
+flowchart LR
+  Prefix[Everything so far] --> Model[Model]
+  Model --> Dist[Probability over all tokens]
+  Dist --> Next[Pick one token]
+  Next --> Prefix
+```
 
-### Creativity versus determinism
+```text
+  Everything so far  →  Model  →  Probability over all tokens
+                                          ↓
+                                   Pick one token
+                                          ↓
+                           Append to sequence, repeat
+```
 
-If the model always picked the single most likely next token, many answers would look repetitive and brittle. Real systems **sample**: they roll the dice using the probability distribution, with knobs—often called **temperature**—that make the distribution sharper (more deterministic) or flatter (more random).
+The model does not generate the full answer in one step. It generates one token, then conditions the next step on everything including that token. This is why edits to early parts of the text can change what comes later — the chain is strictly causal.
 
-- **Lower temperature**: safer, more “on distribution,” sometimes dull or overconfident in a narrow style.  
-- **Higher temperature**: more variety—and more risk of nonsense or drift.
+### A walk-through
 
-You do not need the formula. You need the idea: **randomness is a design choice**, not a sign of “thinking harder.”
+Suppose your prompt is: "The capital of France is"
 
-### “Sounds sure” is cheap
+Step 1: The model looks at this prefix and computes probabilities for every token in its vocabulary. "Paris" might score 0.92. "the" might score 0.02. "a" might score 0.01. Thousands of other tokens share the remaining 0.05.
 
-The model is trained on mountains of text where confident explanations are common. Its objective rewards **plausible continuation**, not **verified fact**. So it can produce crisp, authoritative prose about things that are false or unknown—without a separate “I am guessing” module unless the system prompt or fine-tuning encourages that habit.
+Step 2: The model samples from this distribution. With high probability it picks "Paris."
 
-This is the same **fluency ≠ truth** lesson from Part I, now tied to **mechanics**: there is no step labeled “check against reality” inside the next-token loop.
+Step 3: The new sequence is: "The capital of France is Paris"
 
-**Tradeoff teams ignore at their peril:** they turn **temperature down** to reduce creativity, then interpret the resulting **monotone** confidence as rigor. Statistical flatness is not epistemic humility.
+Step 4: Repeat. Now it might pick "," with high probability, then "which," then "is," then "the," then "capital," then "city" — and so on, one token at a time, until it generates a stop token or reaches the maximum output length.
+
+Notice that at no point does the model look up "capital of France" in a database. It produces "Paris" because, across billions of examples in its training data, "Paris" appeared after "The capital of France is" far more often than anything else. That is the mechanism — and it is why the model can be wrong while sounding completely certain.
+
+### Temperature: the creativity dial
+
+If the model always picked the single most likely next token, most outputs would be repetitive, predictable, and stilted. Real systems **sample** from the probability distribution instead of always taking the top pick.
+
+**Temperature** is the parameter that controls how the sampling works. Think of it like this: the probability distribution is a weighted bag of marbles — each marble is a token, and the weight of each marble is how likely the model thinks it is. Temperature controls whether you use the weights exactly, or whether you flatten or sharpen them:
+
+- **Low temperature (e.g. 0.1):** The distribution is sharpened. The most probable tokens get even more weight; the unlikely ones become even less likely. Outputs are more predictable, repetitive, and confident-sounding.
+- **High temperature (e.g. 1.5):** The distribution is flattened. Unlikely tokens get a meaningful chance. Outputs are more varied and surprising — sometimes creative, sometimes incoherent.
+- **Temperature 0 (or near 0):** The model nearly always picks the top token. Fully deterministic. Good for tasks where you want the same answer every time.
+- **Temperature 1:** Uses the raw probability distribution from the model, unchanged.
+
+*One-line analogy:* Low temperature is a quiz show contestant who only says the first thing that comes to mind. High temperature is that contestant after two coffees — more creative, occasionally wrong.
+
+You do not need to set temperature yourself in most chat products — the provider picks a default. But understanding it explains why the same prompt gives different answers in separate conversations, and why creative writing tasks benefit from different settings than factual Q&A.
+
+### "Sounds sure" is a structural property, not a quality signal
+
+Here is the critical lesson from this chapter: **there is no step in the loop that checks whether the output is true.**
+
+The model is trained on text that includes confident explanations, textbooks, encyclopedia entries, and expert writing. Confident, authoritative prose appears constantly in training data. So the model has learned, at a statistical level, that confident prose follows questions. It produces confident prose — regardless of whether the underlying facts are correct.
+
+When you ask "What year was the Golden Gate Bridge completed?" and the model says "The Golden Gate Bridge was completed in 1937," it is not reporting from a database. It is continuing a prefix in the style of an answer. The year 1937 appears most often following that question pattern in the training data, so 1937 is what it produces. (In this case, it happens to be correct. In other cases, the most common-sounding answer is wrong.)
+
+*Friction:* A common mistake is turning temperature down to make the model "more rigorous." Lower temperature produces more predictable, more confidently stated outputs — it does not produce more accurate ones. Statistical flatness is not the same as epistemic humility.
+
+*Direct address:* If the model sounds certain, that tells you something about how common the style of a certain answer is in text. It tells you nothing reliable about whether that answer is correct. Keep these two things separate, and you will never be seriously misled.
+
+### Quick takeaway
+
+- The model generates text one token at a time, each step conditioned on everything before.
+- Temperature controls the randomness of sampling — lower is more predictable, not more accurate.
+- There is no truth-checking step in the generation loop. Confident-sounding output is a statistical artifact of training data, not a verification signal.
 
 ---
 
 ## Chapter 3 — Training and adaptation in one picture
 
-*Story first:* a **base** model fresh from pretraining might continue your email like a novel—beautiful prose, wrong recipient. Product teams then run later stages so it behaves like something you can ship. You only need a **cartoon** of that pipeline to read announcements and model cards.
+**If you handed someone every book, article, and web page ever written and told them to absorb it all, they would know a great deal — and be terrible at answering your specific questions.** That is roughly the situation with a base language model. The training process has two phases: one that builds broad capability, and one that shapes it into something you can use. Understanding both helps you read model announcements, understand why behavior shifts between versions, and calibrate your expectations.
 
-### Pretraining: learning language from data
+### Pretraining: learning from the internet
 
-**Pretraining** means training the model to predict tokens on a very large mix of text (and sometimes code). From that pressure alone, the system picks up grammar, facts that appear often in the data, style, and shallow reasoning patterns that show up in written explanations.
+**Pretraining** is the large-scale first phase. The model is trained on an enormous text corpus — crawls of the web, digitized books, code repositories, scientific papers, forums, news archives — and asked to predict the next token, over and over, across hundreds of billions of examples.
 
-Pretraining is expensive and defines much of the model’s **raw capability** and **rough knowledge cutoff** (whatever the training snapshot contained).
+From this single, simple objective, the model picks up an enormous amount of structure: grammar, register, genre conventions, factual associations that appear repeatedly in text, code syntax, mathematical reasoning patterns that show up in worked examples, and the rough shape of expert arguments in dozens of domains.
 
-### Teaching helpfulness and format
+Think of it as reading everything ever written — not to memorize it, but to absorb its patterns deeply enough to continue any piece of it plausibly. A model after pretraining can write in the style of a legal brief, continue a Python function, translate between languages, and explain how photosynthesis works — all from the same base process.
 
-Raw pretrained models are often poor chat partners: they continue text like a book, not like an assistant. Later stages **narrow behavior**:
+*Anchor:* A pretrained model is like someone who has read every library in the world but has never had a conversation. Extraordinarily knowledgeable about patterns of text; not at all shaped to be a helpful assistant.
 
-- **Instruction tuning** (supervised fine-tuning on demonstrations of questions and good answers) teaches format: answer the user, stay on topic, follow simple constraints.  
-- **Preference tuning** (learning from human or AI preferences over pairs of answers) nudges the model toward answers people rate as better: clearer, safer, more helpful—by the raters’ lights.
+Pretraining is extremely expensive — tens of millions to hundreds of millions of dollars for frontier models, spread across weeks or months of computation on thousands of specialized processors. It also defines the model's **knowledge cutoff**: anything that happened after the training data was collected is unknown to the model by default.
 
-You will see names like **RLHF**, **DPO**, **constitutional AI** in blog posts. For this book, they are all **post-pretraining alignment and style layers**—important, but not something you must implement to use an API well.
+### Instruction tuning: learning to answer, not just continue
 
-### Vocabulary: base, instruct, chat
+A raw pretrained model, given the prompt "What is the capital of France?", might respond by generating more questions in the same style, or continuing in the voice of a quiz book, or producing a Wikipedia-style paragraph about geography. It is continuing text, not answering a question.
 
-- **Base** (or “foundation”) often means: after pretraining, **before** heavy chat-oriented tuning—powerful but awkward for dialogue.  
-- **Instruction-tuned** / **chat** / **assistant** usually means: further training so the model **behaves** like a product you talk to.
+**Instruction tuning** (also called supervised fine-tuning or SFT) changes this. The model is trained on a curated dataset of examples showing: here is a question or instruction, here is a good answer. The model learns the format of being an assistant — answer the question, stay on topic, respond to follow-up, follow instructions like "be brief" or "use bullet points."
 
-When a provider “updates the model,” behavior can shift because **any** stage changed—not only pretraining.
+This stage is far cheaper than pretraining — it uses a small, carefully constructed dataset, not the entire internet. But it fundamentally changes the model's behavior from "continue this text" to "respond to this request."
 
-**Compact read:** pretraining builds broad language skill; later tuning shapes assistant behavior; “base” vs “chat” names real differences in the pipeline.
+### Preference tuning: learning what "better" means
+
+Instruction tuning teaches format. **Preference tuning** (the most common form is called RLHF — reinforcement learning from human feedback, though related methods exist) teaches quality.
+
+Human raters — or in some newer methods, an AI acting as judge — compare pairs of responses to the same prompt and indicate which is better: more helpful, more honest, safer, better-formatted. The model is then trained to produce responses that match the pattern of preferred outputs.
+
+This is where the model's particular personality comes from: its tendency to hedge certain claims, its refusal patterns, its preferred response lengths, its level of formality. Those are not features the model discovered from pretraining — they are shaped by who did the rating and what they considered "better."
+
+*Tiny vignette:* "One more epoch" of instruction tuning does not fix a problem introduced during preference training — they are different stages with different failure modes and different data. This distinction matters when debugging behavior changes after a model update.
+
+### Base vs. chat: what the labels actually mean
+
+When you see a model described as "base" or "foundation," it typically means a pretrained model without heavy chat-oriented tuning — powerful, but awkward for dialogue. When you see "chat," "instruct," or "assistant," it means the model has gone through at least instruction tuning, and often preference tuning too.
+
+A behavior change after a provider updates their model may have come from any of these stages: a new pretraining data source, adjusted instruction tuning examples, or changed preference ratings. The word "smarter" in a release announcement does not tell you which. Sometimes "smarter" means better reasoning capability (pretraining improvement). Sometimes it means "follows instructions more reliably" (instruction tuning improvement). Sometimes it means "refuses fewer harmless requests" or "refuses more harmful ones" (preference tuning adjustment).
+
+*Friction:* Teams upgrade to a new model version and are surprised when behavior changes in ways unrelated to the announced capability improvements. Understand that capability (reasoning, knowledge) and alignment (style, refusals, format) are different axes, and any of them can shift between versions.
+
+### Quick takeaway
+
+- **Pretraining** builds broad language and world-knowledge capability from enormous text corpora. Expensive. Defines knowledge cutoff.
+- **Instruction tuning** teaches the model to behave like an assistant. Shapes format and basic dialogue.
+- **Preference tuning** (RLHF and related methods) nudges behavior toward what humans (or AI judges) rate as better. Shapes personality, refusals, and style.
+- "Base" and "chat" are meaningful distinctions. Model updates can change any stage, not just the one announced.
 
 ---
 
 ## Chapter 4 — Context windows and memory
 
-**What if your desk only held one sheet of paper—but every time you wrote a new line, the top line could vanish?** That is closer to how chat works than “the AI remembers our whole friendship.”
+**Imagine you are working at a desk, but the desk only holds one sheet of paper — and every time you write a new line, the line at the top disappears.** That is closer to how a language model handles memory than any human analogy involving a brain or a filing cabinet.
 
-The model has no invisible notebook. Everything it “knows” during a reply is whatever sits in the **context**: the tokens you send this turn (system prompt, prior turns, retrieved snippets—if the product adds them). That set is **bounded**.
+The model has no invisible notebook. There is no long-term memory being maintained between sessions by default. Everything the model "knows" during a reply is whatever sits in the **context window** — the tokens you send this turn, including system instructions, prior messages, retrieved documents, and any other text the product injects before your message arrives.
 
-### A fixed window
+### What a context window is
 
-A **context window** (or **context length**) is a hard limit on how many tokens can be considered at once—input plus, in many setups, room reserved for the reply. If you exceed it, something must give: the oldest material may be **dropped**, or the request may be **rejected**.
+A **context window** (also called **context length**) is a hard limit on how many tokens the model can consider at once for a single request. This includes:
 
-Long documents, long chats, and fat system prompts compete for the same space. **Summarization**, **chunking**, and **retrieval** (choosing only relevant pieces to put in context) are not optional luxuries for serious work—they are strategies for staying inside the window. *From Prompts to Systems* develops those patterns; here, you only need the **constraint**.
+- The **system prompt** (instructions the product places before your message)
+- Any **prior conversation** the product includes (chat history)
+- **Retrieved documents** or tool outputs the system injects
+- Your **current message**
+- Space reserved for the model's **reply**
 
-### Conversations and “forgetting”
+All of these share the same fixed budget. Context windows have grown dramatically in recent years — from 4,000 tokens to 128,000 or even 1 million tokens in some models. But even a million-token context has a ceiling, and the pricing for very large contexts can be significant.
 
-In a chat UI, earlier messages are often concatenated into the prompt each time. When the running total approaches the limit, the product may **truncate** from the top, **summarize** old turns, or ask you to start a new thread. None of that is human memory—it is **bookkeeping** in the prompt builder.
+```mermaid
+flowchart TB
+  subgraph window["One context window — everything shares this budget"]
+    S[System prompt / instructions]
+    H[Prior conversation turns]
+    D[Retrieved documents or tool outputs]
+    U[Your current message]
+    R[Space for the model's reply]
+  end
+```
 
-If something important happened twenty turns ago and fell out of the window, the model has **no access** to it unless you paste it back in or the system stores and re-injects it by design.
+```text
+  ┌─────────────────────────────────────────────┐
+  │  Context window (all tokens share this)      │
+  │  • System prompt                             │
+  │  • Prior conversation turns                  │
+  │  • Retrieved documents / tool outputs        │
+  │  • Your current message                      │
+  │  • Space for the model's reply               │
+  └─────────────────────────────────────────────┘
+```
 
-### Why this connects to cost
+### Forgetting and what to do about it
 
-Longer context is not “free” for providers either: attention over many tokens costs compute. That is why **long-context** features may be priced differently or rolled out gradually.
+In a chat interface, earlier messages are typically concatenated into the prompt each time. When the running total approaches the context limit, the product must do something: truncate from the top (oldest messages disappear), summarize old turns (lossy compression), or ask you to start a new thread.
 
-*Takeaway you can use Monday morning:* context is finite; everything the model sees must fit in the window; long chats and long docs need deliberate strategies, not hope.
+The model has no access to anything that fell outside the window. If you mentioned an important constraint in message one and the chat has grown long enough that message one dropped out, the model will simply not know about it. It is not being forgetful in a human sense — it never had access in the first place.
+
+*Tiny vignette:* Summarization is a lossy compression of your conversation. Fine for "remind me what we were discussing." Catastrophic if the dropped line was "the patient is allergic to penicillin."
+
+### Three strategies for working within limits
+
+**Measure your baseline first.** Before building any workflow that involves long documents or long conversations, find out how much of your context budget your system prompt and typical history consume. The surprises almost always come from things other than the user's actual question.
+
+**Summarize old conversation history.** When a chat thread is getting long, ask the model to produce a compact summary of the key decisions and facts from earlier in the conversation, then paste that summary into the start of a new thread. You lose nuance but preserve the load-bearing information.
+
+**Retrieve instead of paste.** If you have a large document, do not paste all of it into the context. Instead, identify the specific sections relevant to your current question and include only those. This is the manual version of what retrieval-augmented generation (RAG) systems do automatically — and it is often more effective than hoping the model can find what it needs in a haystack of text.
+
+*Friction:* "The AI should just remember our whole conversation" is the context window fighting human intuition about memory. The product interface may look like a persistent conversation; the underlying model only sees what fits in the current window. Those two things are different, and the product controls how the gap is managed.
+
+*Direct address:* If something important happened twenty turns ago and the behavior changed inexplicably, check whether those turns are still in the window. The answer is often no.
+
+### Why context costs money
+
+Longer contexts are not free for providers either — processing attention over many tokens requires more compute. This is why long-context features are sometimes priced at a premium, why some providers charge different rates for input and output tokens, and why very large context windows are often offered at higher tiers. Context is a resource. Treating it as unlimited, even when the limit is technically large, leads to unexpected costs.
+
+### Quick takeaway
+
+- The context window is a hard limit on everything the model can see in one request — system prompt, history, documents, and your message combined.
+- Material outside the context window is invisible to the model. "Forgetting" in long chats is real and architectural, not a personality quirk.
+- Practical strategies: measure your baseline, summarize old history, retrieve instead of paste.
+- Long context costs more compute. Treat it as a resource.
 
 ---
 
 ## Try it
 
-1. **Token awareness.** Paste a paragraph you wrote (about 100–150 words) into your provider’s **tokenizer** or token counter, if available. Note approximate token count—and one word that split into **multiple** tokens. If the tool shows per-token IDs, glance once; you are allowed to find that satisfying without understanding the math.
+Four short exercises. Use any mainstream chat tool you have access to. Nothing is graded — the goal is to turn the abstractions above into something you have directly observed.
 
-2. **Same prompt, two temperatures.** Ask a short creative question twice; if the UI exposes **temperature** or “more/less creative,” use low vs high. Which answer would you **trust** for a fact, and which for brainstorming? If you cannot change temperature, ask the same question in **two separate chats** and compare anyway—sampling noise still teaches you something.
+### Exercise 1 — Count your tokens
+
+Find a paragraph you have written recently — an email, a document section, anything around 100–150 words. If your provider has a public tokenizer tool, paste the text in and look at the token count. Note:
+
+- The rough ratio of words to tokens (typically 1.3–1.5 for English prose)
+- One word or punctuation mark that split in a way you did not expect
+
+If you have access to two different text types, compare English prose with a code snippet of similar word count. Which is more expensive per word? Why?
+
+### Exercise 2 — Same prompt, two temperatures
+
+Ask a short creative question — something like "Write an opening sentence for a story set in an unusual location" — twice, in two separate chats. If your product exposes a temperature or creativity slider, try low and high settings. If it does not, the natural variation between fresh chat sessions is enough.
+
+Compare the two responses. Which would you trust more for a factual question? Which would you prefer for brainstorming? What does this tell you about what temperature controls?
+
+### Exercise 3 — Find the context limit in a long document
+
+Take a long document — something over 2,000 words — and try asking the model questions about different parts of it: the beginning, the middle, and the end. Does the model answer with equal accuracy for all three parts?
+
+Try pasting a much longer document if you have one. Does the model start missing things toward the end? This exercise is a direct observation of what happens at or near context limits — the model's answers degrade even when it appears to be considering the whole document.
+
+### Exercise 4 — Base vs. chat behavior
+
+Most providers allow you to access a base (pretrained, minimally tuned) model alongside their chat model. If yours does, give both the same prompt that sounds like the beginning of an article — something like: "Large language models were first introduced in"
+
+The base model will probably continue the sentence as if writing an article. The chat model will probably treat it as a question and answer it. This single observation captures the difference between pretraining and instruction tuning more concretely than any explanation can.
 
 ---
 

@@ -2,79 +2,91 @@
 
 **Author:** Sharif Uddin
 
-This project is a **three-volume series** on **large language models (LLMs)**. Each volume has its **own folder** with a hub file, part files, and shared `scripts/` and `build/` at the repo root.
+A **three-volume series** on large language models — from first concepts to the research frontier. Each volume stands on its own, but they are designed to be read in order: each one assumes the vocabulary and habits of the one before it.
 
-## The series
+---
 
-| Book | Working title | Hub (folder) |
-|------|----------------|------|
-| Volume I — Basic | **From Tokens to Understanding** — *An introduction to large language models* | [from-tokens-to-understanding/from-tokens-to-understanding.md](from-tokens-to-understanding/from-tokens-to-understanding.md) |
-| Volume II — Intermediate | **From Prompts to Systems** — *Intermediate practice with large language models* | [from-prompts-to-systems/from-prompts-to-systems.md](from-prompts-to-systems/from-prompts-to-systems.md) |
-| Volume III — Advanced | **From Models to Frontiers** — *Advanced topics in large language modeling* | [from-models-to-frontiers/from-models-to-frontiers.md](from-models-to-frontiers/from-models-to-frontiers.md) |
+## The series at a glance
 
-### Volume I — parts
+| Volume | Level | Title | Who it is for |
+|--------|-------|-------|---------------|
+| **I** | Beginner | [From Tokens to Understanding](from-tokens-to-understanding/from-tokens-to-understanding.md) | Curious readers and professionals who want a plain-language picture of what LLMs are, how they behave, and how to use them without embarrassing yourself |
+| **II** | Intermediate | [From Prompts to Systems](from-prompts-to-systems/from-prompts-to-systems.md) | Developers, product managers, and technical writers who are past the demo stage and want to ship real features with LLMs |
+| **III** | Advanced | [From Models to Frontiers](from-models-to-frontiers/from-models-to-frontiers.md) | Researchers, senior engineers, and technical leads who need depth on scaling, alignment, efficiency, and the frontier |
 
-Read in order, or open the [hub](from-tokens-to-understanding/from-tokens-to-understanding.md) for the introduction and links.
+---
 
-| Part | Title | File |
-|------|--------|------|
-| I | Finding your bearings | [from-tokens-to-understanding-part-i-finding-your-bearings.md](from-tokens-to-understanding/from-tokens-to-understanding-part-i-finding-your-bearings.md) |
-| II | How it works (without equations) | [from-tokens-to-understanding-part-ii-how-it-works-without-equations.md](from-tokens-to-understanding/from-tokens-to-understanding-part-ii-how-it-works-without-equations.md) |
-| III | Capabilities and limits | [from-tokens-to-understanding-part-iii-capabilities-and-limits.md](from-tokens-to-understanding/from-tokens-to-understanding-part-iii-capabilities-and-limits.md) |
-| IV | First steps with prompts | [from-tokens-to-understanding-part-iv-first-steps-with-prompts.md](from-tokens-to-understanding/from-tokens-to-understanding-part-iv-first-steps-with-prompts.md) |
-| V | Responsibility in everyday use | [from-tokens-to-understanding-part-v-responsibility-in-everyday-use.md](from-tokens-to-understanding/from-tokens-to-understanding-part-v-responsibility-in-everyday-use.md) |
-| VI | What’s next | [from-tokens-to-understanding-part-vi-whats-next.md](from-tokens-to-understanding/from-tokens-to-understanding-part-vi-whats-next.md) |
+## Volume I — From Tokens to Understanding
 
-**PDFs.** You need **pandoc** (`brew install pandoc` on macOS) and **Google Chrome** (or set `CHROME_PATH` to a Chromium/Chrome binary). The scripts use Pandoc → HTML → headless print-to-PDF—no Python packages for PDF output.
+*An introduction to large language models*
 
-**PDF (Volume I).** From the repo root:
+No math, no code required. You leave with a stable mental model: what these systems actually are, what they reliably do and reliably don't do, and how to use them without mistaking fluent text for verified fact.
 
-`python3 scripts/build-volume1-pdf.py`
-
-That writes `build/from-tokens-to-understanding-print.md` (combined source) and `build/from-tokens-to-understanding.pdf`. Mermaid blocks in Notes appear as plain code in the PDF.
-
-### Volume II — parts
-
-Read in order, or open the [hub](from-prompts-to-systems/from-prompts-to-systems.md) for the introduction and links.
+**Parts:**
 
 | Part | Title | File |
-|------|--------|------|
-| I | Mental models and the model lifecycle | [from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md](from-prompts-to-systems/from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md) |
-| II | Prompting as engineering | [from-prompts-to-systems-part-ii-prompting-as-engineering.md](from-prompts-to-systems/from-prompts-to-systems-part-ii-prompting-as-engineering.md) |
-| III | Data, retrieval, and adaptation | [from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md](from-prompts-to-systems/from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md) |
-| IV | Evaluation, quality, and safety in practice | [from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md](from-prompts-to-systems/from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md) |
-| V | Systems: APIs, deployment, and operations | [from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md](from-prompts-to-systems/from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) |
-| VI | Teams, ethics, and the path forward | [from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md](from-prompts-to-systems/from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md) |
+|------|-------|------|
+| I | Finding your bearings | [part-i](from-tokens-to-understanding/from-tokens-to-understanding-part-i-finding-your-bearings.md) |
+| II | How it works (without equations) | [part-ii](from-tokens-to-understanding/from-tokens-to-understanding-part-ii-how-it-works-without-equations.md) |
+| III | Capabilities and limits | [part-iii](from-tokens-to-understanding/from-tokens-to-understanding-part-iii-capabilities-and-limits.md) |
+| IV | First steps with prompts | [part-iv](from-tokens-to-understanding/from-tokens-to-understanding-part-iv-first-steps-with-prompts.md) |
+| V | Responsibility in everyday use | [part-v](from-tokens-to-understanding/from-tokens-to-understanding-part-v-responsibility-in-everyday-use.md) |
+| VI | What's next | [part-vi](from-tokens-to-understanding/from-tokens-to-understanding-part-vi-whats-next.md) |
 
-**PDF (Volume II).** From the repo root:
+**Build PDF (Volume I):** `python3 scripts/build-volume1-pdf.py`
 
-`python3 scripts/build-volume2-pdf.py`
+---
 
-That writes `build/from-prompts-to-systems-print.md` and `build/from-prompts-to-systems.pdf`.
+## Volume II — From Prompts to Systems
 
-### Volume III — parts
+*Intermediate practice with large language models*
 
-Read in order, or open the [hub](from-models-to-frontiers/from-models-to-frontiers.md) for the introduction and links. (Volume III uses **five** parts covering seventeen chapters.)
+The gap between "this demo is amazing" and "this feature works in production" is a graveyard of good ideas. Volume II is about closing that gap: choosing between prompt, retrieval, and fine-tuning; building evaluation pipelines; wiring models into real applications; and operating them reliably.
+
+**Parts:**
 
 | Part | Title | File |
-|------|--------|------|
-| I | Scale, data, and the pretraining stack | [from-models-to-frontiers-part-i-scale-data-and-the-pretraining-stack.md](from-models-to-frontiers/from-models-to-frontiers-part-i-scale-data-and-the-pretraining-stack.md) |
-| II | Alignment, safety, and robustness | [from-models-to-frontiers-part-ii-alignment-safety-and-robustness.md](from-models-to-frontiers/from-models-to-frontiers-part-ii-alignment-safety-and-robustness.md) |
-| III | Efficiency: training, inference, and systems | [from-models-to-frontiers-part-iii-efficiency-training-inference-and-systems.md](from-models-to-frontiers/from-models-to-frontiers-part-iii-efficiency-training-inference-and-systems.md) |
-| IV | Beyond text: multimodal models and agents | [from-models-to-frontiers-part-iv-beyond-text-multimodal-models-and-agents.md](from-models-to-frontiers/from-models-to-frontiers-part-iv-beyond-text-multimodal-models-and-agents.md) |
-| V | Frontiers and open problems | [from-models-to-frontiers-part-v-frontiers-and-open-problems.md](from-models-to-frontiers/from-models-to-frontiers-part-v-frontiers-and-open-problems.md) |
+|------|-------|------|
+| I | Mental models and the model lifecycle | [part-i](from-prompts-to-systems/from-prompts-to-systems-part-i-mental-models-and-the-model-lifecycle.md) |
+| II | Prompting as engineering | [part-ii](from-prompts-to-systems/from-prompts-to-systems-part-ii-prompting-as-engineering.md) |
+| III | Data, retrieval, and adaptation | [part-iii](from-prompts-to-systems/from-prompts-to-systems-part-iii-data-retrieval-and-adaptation.md) |
+| IV | Evaluation, quality, and safety in practice | [part-iv](from-prompts-to-systems/from-prompts-to-systems-part-iv-evaluation-quality-and-safety-in-practice.md) |
+| V | Systems: APIs, deployment, and operations | [part-v](from-prompts-to-systems/from-prompts-to-systems-part-v-systems-apis-deployment-and-operations.md) |
+| VI | Teams, ethics, and the path forward | [part-vi](from-prompts-to-systems/from-prompts-to-systems-part-vi-teams-ethics-and-the-path-forward.md) |
 
-**PDF (Volume III).** From the repo root:
+**Build PDF (Volume II):** `python3 scripts/build-volume2-pdf.py`
 
-`python3 scripts/build-volume3-pdf.py`
+---
 
-That writes `build/from-models-to-frontiers-print.md` and `build/from-models-to-frontiers.pdf`.
+## Volume III — From Models to Frontiers
+
+*Advanced topics in large language modeling*
+
+For those who need to understand the science behind the product: scaling laws, data curation at web scale, alignment research, training and inference efficiency, multimodal architectures, agents, and the open problems that still lack satisfactory answers.
+
+**Parts:**
+
+| Part | Title | File |
+|------|-------|------|
+| I | Scale, data, and the pretraining stack | [part-i](from-models-to-frontiers/from-models-to-frontiers-part-i-scale-data-and-the-pretraining-stack.md) |
+| II | Alignment, safety, and robustness | [part-ii](from-models-to-frontiers/from-models-to-frontiers-part-ii-alignment-safety-and-robustness.md) |
+| III | Efficiency: training, inference, and systems | [part-iii](from-models-to-frontiers/from-models-to-frontiers-part-iii-efficiency-training-inference-and-systems.md) |
+| IV | Beyond text: multimodal models and agents | [part-iv](from-models-to-frontiers/from-models-to-frontiers-part-iv-beyond-text-multimodal-models-and-agents.md) |
+| V | Frontiers and open problems | [part-v](from-models-to-frontiers/from-models-to-frontiers-part-v-frontiers-and-open-problems.md) |
+
+**Build PDF (Volume III):** `python3 scripts/build-volume3-pdf.py`
+
+---
 
 ## How to use this repo
 
-- Open the **folder** for the volume you are editing; the **hub** file links to all parts.
-- Cross-volume links in the manuscripts use relative paths (e.g. `../from-prompts-to-systems/…`).
-- PDF build scripts read from those folders and write combined sources under `build/`.
+- Each volume lives in its own folder; the **hub file** (`from-tokens-to-understanding.md`, etc.) is the entry point with introduction, audience notes, and links to all parts.
+- Part files are the actual book content — read them in order or jump to a topic.
+- Cross-volume links use relative paths (`../from-prompts-to-systems/…`).
+- PDF build scripts read from the volume folders and write combined output under `build/`.
+- `scripts/` contains the PDF build helpers; `build/` contains compiled output.
+
+**Dependencies for PDF build:** `pandoc` (`brew install pandoc` on macOS) and Google Chrome or Chromium (for headless print-to-PDF). Set `CHROME_PATH` if Chrome is not in the default location.
 
 ---
 
